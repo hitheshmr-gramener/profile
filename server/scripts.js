@@ -24,43 +24,40 @@ fetch(`${API_URL}${API_PORT}/get_data`)
       throw new Error('No data received from Google Sheet');
     }
 
-    const table = document.getElementById("sheetTable");
-    table.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
-
-    // Add header
-    const headerRow = document.createElement("tr");
-    Object.keys(data[0]).forEach(header => {
-      const th = document.createElement("th");
-      th.textContent = header;
-      headerRow.appendChild(th);
-    });
-    table.appendChild(headerRow);
-
-    // Add data rows
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      Object.values(row).forEach(cell => {
-        const td = document.createElement("td");
-        td.textContent = cell;
-        tr.appendChild(td);
+    const profileSection = document.getElementById('profile-section');
+    const loadingDiv = profileSection.querySelector('.loading');
+    const table = profileSection.querySelector('.profile-table');
+    const tbody = document.getElementById('profile-tbody');
+    
+    // Clear loading message and show table
+    if (loadingDiv) loadingDiv.style.display = 'none';
+    if (table) table.style.display = 'table';
+    
+    if (tbody) {
+      data.forEach(profile => {
+        const row = document.createElement('tr');
+        
+        // Add cells
+        row.innerHTML = `
+          <td>${profile['Full Name'] || ''}</td>
+          <td>${profile['Designation'] || ''}</td>
+          <td>${profile['Highest Qualification'] || ''}</td>
+          <td>${profile['College / University Name'] || ''}</td>
+          <td>
+            <a class="linkedin-link" href="${profile['LinkedIn link'] || '#'}" target="_blank">
+              <i class="fab fa-linkedin"></i> View
+            </a>
+          </td>
+        `;
+        
+        tbody.appendChild(row);
       });
-      table.appendChild(tr);
-    });
+    }
   })
-  .catch(err => {
-    console.error("Failed to fetch data:", err);
-    const table = document.getElementById("sheetTable");
-    const errorMessage = `
-      <tr>
-        <td class="error">
-          Error loading data: ${err.message}<br>
-          <small>Please make sure:
-            <ul>
-              <li>The Flask server is running</li>
-              <li>You have internet connection</li>
-            </ul>
-          </small>
-        </td>
-      </tr>`;
-    table.innerHTML = errorMessage;
+  .catch(error => {
+    console.error('Error:', error);
+    const profileSection = document.getElementById('profile-section');
+    if (profileSection) {
+      profileSection.innerHTML = `<div class="error">Error loading profiles: ${error.message}</div>`;
+    }
   });
