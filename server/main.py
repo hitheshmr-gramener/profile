@@ -21,9 +21,10 @@ app = Flask(__name__,
 # Enable CORS for specific origins in production
 if os.environ.get('FLASK_ENV') == 'production':
     CORS(app, resources={r"/*": {"origins": [
-        "https://hitheshmr.github.io",  # Your GitHub Pages domain
-        "http://localhost:5000",        # Local development
-        "http://127.0.0.1:5000"         # Local development alternative
+        "https://hitheshmr-gramener.github.io",       # GitHub Pages domain
+        "https://hitheshmr-gramener.github.io/profile", # GitHub Pages project URL
+        "http://localhost:5000",                      # Local development
+        "http://127.0.0.1:5000"                      # Local development alternative
     ]}})
 else:
     CORS(app)  # Allow all origins in development

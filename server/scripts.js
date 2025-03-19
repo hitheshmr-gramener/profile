@@ -3,20 +3,23 @@ const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
     : 'https://profile-backend-9kyx.onrender.com';
 
+console.log('Using API URL:', API_URL); // Debug log
+
 // Fetch data from our Flask backend
 fetch(`${API_URL}/get_data`)
   .then(response => {
+    console.log('Response status:', response.status); // Debug log
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return response.json();
   })
   .then(data => {
+    console.log('Received data:', data); // Debug log
     if (!data || data.length === 0) {
       throw new Error('No data received from Google Sheet');
     }
 
-    // Add this before the fetch call
     const table = document.getElementById("sheetTable");
     table.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
 
