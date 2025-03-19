@@ -2,38 +2,118 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Hithesh M R - Data Scientist Portfolio</title>
+  <title>Portfolios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css" id="theme">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f5f5f5;
+    }
+    #profile-section {
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .profile-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .profile-table th {
+      background-color: #2c3e50;
+      color: white;
+      text-align: left;
+      padding: 12px;
+      font-size: clamp(0.8rem, 1.5vw, 1rem);
+    }
+    .profile-table td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      color: #000000 !important;
+    }
+    .comma-list {
+      white-space: normal;
+      line-height: 1.4;
+    }
+    .profile-table tr:hover {
+      background-color: #f8f9fa;
+    }
+    .linkedin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #0077b5;
+      text-decoration: none;
+    }
+    .linkedin-link:hover {
+      text-decoration: underline;
+    }
+    .loading {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #666;
+    }
+    .error {
+      color: #d32f2f;
+      background-color: #ffebee;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    /* Reveal.js overrides */
+    .reveal .slides section {
+      height: 100vh;
+      padding: 0;
+    }
+    .reveal .slides {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
+      transform: none !important;
+    }
+    /* Ensure table background stays white */
+    .reveal .profile-table {
+      background-color: white !important;
+    }
+  </style>
 </head>
 <body>
   <div class="reveal">
     <div class="slides">
 
       <!-- Slide 1: Profile -->
-      <section>
-        <div class="profile-header">
-          <h2>Hithesh M R</h2>
-          <p><strong>Associate Data Scientist</strong><br><span>Gramener - A Straive Company</span></p>
-        </div>
-        <div class="profile-content">
-          <div class="profile-left">
-            <div class="about-section">
-              <p>Data Scientist specializing in intelligent system architecture and AI-driven solutions. Expert in developing scalable applications leveraging RAG frameworks, NLP, and cloud technologies. Demonstrated success in implementing real-time analytics solutions and predictive modeling for traffic forecasting.</p>
-              <p>Focused on creating innovative solutions at the convergence of automation and decision intelligence. Published researcher with a proven track record of transforming complex data challenges into actionable insights and practical applications.</p>
-            </div>
-          </div>
-          <div class="profile-right">
-            <div class="education-section">
-              <p><strong>M.Tech</strong> - Computational & Data Science<br>NIT Karnataka (2022–2024)</p>
-              <p><strong>B.Tech</strong> - Mechanical Engineering<br>NIE Mysore (2017–2021)</p>
-            </div>
-          </div>
-        </div>
+      <section id="profile-section">
+        <div class="loading">Loading profiles...</div>
+        <table class="profile-table" style="display: none;">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Designation</th>
+              <th>Qualification</th>
+              <th>Institution</th>
+              <th>LinkedIn</th>
+              <th>Projects</th>
+              <th>Languages</th>
+              <th>AI/ML Skills</th>
+              <th>Tools & Frameworks</th>
+            </tr>
+          </thead>
+          <tbody id="profile-tbody">
+          </tbody>
+        </table>
       </section>
 
       <!-- Slide 2: Technology Skills -->
@@ -196,6 +276,48 @@
     };
 
     let network;
+    
+    // Fetch and populate profile data
+    fetch('http://localhost:5000/get_data')
+      .then(response => response.json())
+      .then(data => {
+        const profileSection = document.getElementById('profile-section');
+        const loadingDiv = profileSection.querySelector('.loading');
+        const table = profileSection.querySelector('.profile-table');
+        const tbody = document.getElementById('profile-tbody');
+        
+        // Clear loading message and show table
+        loadingDiv.style.display = 'none';
+        table.style.display = 'table';
+        
+        data.forEach(profile => {
+          const row = document.createElement('tr');
+          
+          // Add cells
+          row.innerHTML = `
+            <td>${profile['Full Name']}</td>
+            <td>${profile['Designation (Example : Associate Data Science Engineer)']}</td>
+            <td>${profile['Highest Qualification']}</td>
+            <td>${profile['College / University Name']}</td>
+            <td>
+              <a class="linkedin-link" href="${profile['LinkedIn link']}" target="_blank">
+                <i class="fab fa-linkedin"></i> View
+              </a>
+            </td>
+            <td class="comma-list">${profile['Projects']}</td>
+            <td class="comma-list">${profile['Programming Languages\nList the programming languages you are proficient in, separated by commas (e.g., Python, JavaScript, SQL, Java).']}</td>
+            <td class="comma-list">${profile['AI / ML Skills\nList any Artificial Intelligence or Machine Learning tools, libraries, or frameworks you\'re familiar with, separated by commas (e.g., TensorFlow, Scikit-learn, OpenAI API, LangChain, Hugging Face).']}</td>
+            <td class="comma-list">${profile['Tools / Libraries / Frameworks']}</td>
+          `;
+          
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        const profileSection = document.getElementById('profile-section');
+        profileSection.innerHTML = `<div class="error">Error loading profiles: ${error.message}</div>`;
+      });
+
     Reveal.on('slidechanged', event => {
       if (event.currentSlide.querySelector('#network') && !network) {
         network = new vis.Network(container, data, options);

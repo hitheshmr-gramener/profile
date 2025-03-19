@@ -4,6 +4,7 @@ import requests
 import urllib3
 import os
 import io
+from flask_cors import CORS
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -15,6 +16,9 @@ app = Flask(__name__,
     template_folder=current_dir,  # Set template folder to current directory
     static_folder=current_dir     # Set static folder to current directory
 )
+
+# Enable CORS for all routes
+CORS(app)
 
 SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub?gid=1674504463&single=true&output=csv"
 
