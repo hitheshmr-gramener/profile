@@ -49,9 +49,8 @@ Highlights of key data science projects and implementations:
 
 ## Contact
 For collaborations or inquiries, feel free to connect:
-- LinkedIn: [Your LinkedIn Profile]
-- Email: [Your Email]
-- GitHub: [Your GitHub Profile]
+- LinkedIn: [Hithesh M R](https://www.linkedin.com/in/hithesh-mr/)
+- Email: [hitheshmr@gmail.com](mailto:hitheshmr@gmail.com)
+- GitHub: [hitheshmr-gramener](https://github.com/hitheshmr-gramener)
 
 ---
-*This portfolio showcases my journey and expertise in Data Science, featuring projects and skills developed through hands-on experience and continuous learning.*
