@@ -1,0 +1,479 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hithesh M R - Data Scientist Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css" id="theme">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #10b981;
+      --accent-color: #f43f5e;
+      --text-color: #f8fafc;
+      --bg-color: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --hover-color: rgba(37, 99, 235, 0.1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-color) 0%, #1e293b 100%);
+      color: var(--text-color);
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .reveal {
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .reveal .slides {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .reveal .slides section {
+      padding: 20px;
+      height: calc(100vh - 40px);
+      width: calc(100vw - 40px);
+      display: flex !important;
+      flex-direction: column;
+    }
+
+    .profile-header {
+      text-align: center;
+      padding: 0.4em;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      margin-bottom: 0.8em;
+    }
+
+    .profile-header h2 {
+      margin: 0;
+      line-height: 1;
+    }
+
+    .profile-header p {
+      margin: 0;
+      line-height: 1;
+    }
+
+    .profile-header span {
+      font-size: 0.85em;
+      color: #94a3b8;
+      display: inline-block;
+    }
+
+    .profile-content {
+      display: flex;
+      gap: 1em;
+      flex: 1;
+    }
+
+    .profile-left, .profile-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-section {
+      background: var(--card-bg);
+      padding: 1.2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      flex: 1;
+    }
+
+    .education-section {
+      background: var(--card-bg);
+      padding: 1.2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      flex: 1;
+    }
+
+    .skills-container {
+      background: var(--card-bg);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      align-content: flex-start;
+      height: calc(100vh - 120px);
+    }
+
+    .skill-category {
+      display: inline-block;
+      margin: 2px;
+      padding: 3px 8px;
+      background: var(--hover-color);
+      border-radius: 10px;
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      font-size: 0.5em;
+      transition: all 0.2s ease;
+    }
+
+    .project-container {
+      background: var(--card-bg);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      height: calc(100vh - 120px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1em;
+      align-content: start;
+    }
+
+    #network-container {
+      background: var(--card-bg);
+      padding: 1em;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      height: calc(100vh - 120px);
+    }
+
+    #network {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+    }
+
+    .reveal h2 {
+      margin-bottom: 0.8em;
+      font-size: 1.3em;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    .reveal h3 {
+      font-size: 0.95em;
+      margin-bottom: 0.3em;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .reveal p, .reveal li {
+      font-weight: 300;
+      line-height: 1.3;
+      font-size: 0.55em;
+      color: #cbd5e1;
+    }
+
+    .about-section p {
+      font-size: 0.4em;
+      color: #e2e8f0;
+      margin: 0;
+      text-align: justify;
+      line-height: 1.5;
+    }
+
+    .education-section p {
+      font-size: 0.4em;
+      margin: 0.4em 0;
+      line-height: 1.5;
+    }
+
+    .education-section strong {
+      font-size: 1em;
+      color: var(--secondary-color);
+      letter-spacing: 0.02em;
+    }
+
+    .project-card {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 6px;
+      padding: 0.8em;
+      margin: 4px 0;
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .project-card h3 {
+      font-size: 0.45em;
+      margin-bottom: 0.3em;
+      color: var(--text-color);
+    }
+
+    .project-card h3 strong {
+      color: var(--secondary-color);
+      font-size: 1em;
+      letter-spacing: 0.02em;
+    }
+
+    .project-card p {
+      font-size: 0.4em;
+      margin: 0;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-color);
+      opacity: 0.5;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .reveal .progress {
+      height: 3px;
+      color: var(--secondary-color);
+    }
+
+    .reveal .controls {
+      color: var(--primary-color);
+    }
+
+    .reveal .controls button {
+      transition: all 0.3s ease;
+    }
+
+    .reveal .controls button:hover {
+      color: var(--secondary-color);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary-color);
+    }
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1: Profile -->
+    <section>
+      <div class="profile-header">
+        <h2>Hithesh M R</h2>
+        <p><strong>Associate Data Scientist</strong><br><span>Gramener - A Straive Company</span></p>
+      </div>
+      <div class="profile-content">
+        <div class="profile-left">
+          <div class="about-section">
+            <p>Data Scientist specializing in intelligent system architecture and AI-driven solutions. Expert in developing scalable applications leveraging RAG frameworks, NLP, and cloud technologies. Demonstrated success in implementing real-time analytics solutions and predictive modeling for traffic forecasting.</p>
+            <p style="margin-top: 0.8em">Focused on creating innovative solutions at the convergence of automation and decision intelligence. Published researcher with a proven track record of transforming complex data challenges into actionable insights and practical applications.</p>
+          </div>
+        </div>
+        <div class="profile-right">
+          <div class="education-section">
+            <p><strong>M.Tech</strong> - Computational & Data Science<br>NIT Karnataka (2022–2024)</p>
+            <p><strong>B.Tech</strong> - Mechanical Engineering<br>NIE Mysore (2017–2021)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Technology Skills -->
+    <section>
+      <h2>Technology Skills</h2>
+      <div class="skills-container">
+        <div class="skill-category">Python, JavaScript, SQL, HTML/CSS, YAML</div>
+        <div class="skill-category">Machine Learning, LLMs, RAG, OpenAI, LangChain</div>
+        <div class="skill-category">PostgreSQL (pgvector), Flask, Jira REST API</div>
+        <div class="skill-category">Geospatial Tech: Turf.js, Mapbox GL JS, ArcGIS</div>
+        <div class="skill-category">AWS, Azure, Git, GitLab CI/CD</div>
+        <div class="skill-category">Evaluation: Precision@K, MMR, NDCG</div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Projects -->
+    <section>
+      <h2>Projects</h2>
+      <div class="project-container">
+        <div class="project-card">
+          <h3><strong>RAG Framework</strong></h3>
+          <p>AI-based financial document querying</p>
+        </div>
+        <div class="project-card">
+          <h3><strong>Timesheet Generator (POC)</strong></h3>
+          <p>Jira integration with LLM-powered automation</p>
+        </div>
+        <div class="project-card">
+          <h3><strong>Traffic Visualization (Malaysia POC)</strong></h3>
+          <p>Predictive traffic modeling and geospatial analytics</p>
+        </div>
+        <div class="project-card">
+          <h3><strong>Mammogram Tumor Segmentation</strong></h3>
+          <p>Medical image segmentation using UNet & SAM</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: K-Partite Graph -->
+    <section>
+      <h2>Skills & Projects Network</h2>
+      <div id="network-container">
+        <div id="network"></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Reveal.js & Vis.js -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+<script>
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    center: false,
+    hash: true,
+    transition: 'slide',
+    width: "100%",
+    height: "100%",
+    margin: 0,
+    minScale: 0.8,
+    maxScale: 1,
+    plugins: [],
+    slideNumber: true,
+    overview: true,
+    touch: true,
+    fragments: true,
+    embedded: false,
+    help: true,
+    showNotes: false,
+    autoPlayMedia: false,
+    autoSlide: 0
+  });
+
+  const nodes = [
+    { id: 1, label: 'Hithesh', group: 'person', shape: 'circularImage', image: 'https://img.icons8.com/color/96/000000/user-male-circle--v1.png' },
+
+    // Projects
+    { id: 2, label: 'RAG Framework', group: 'project' },
+    { id: 3, label: 'Timesheet Generator', group: 'project' },
+    { id: 4, label: 'Traffic Visualization', group: 'project' },
+    { id: 5, label: 'Mammogram Segmentation', group: 'project' },
+
+    // Skills
+    { id: 6, label: 'Python', group: 'skill' },
+    { id: 7, label: 'OpenAI API', group: 'skill' },
+    { id: 8, label: 'LangChain', group: 'skill' },
+    { id: 9, label: 'pgvector', group: 'skill' },
+    { id: 10, label: 'Jira REST API', group: 'skill' },
+    { id: 11, label: 'Mapbox GL JS', group: 'skill' },
+    { id: 12, label: 'ArcGIS', group: 'skill' },
+    { id: 13, label: 'UNet & SAM', group: 'skill' },
+    { id: 14, label: 'Flask', group: 'skill' }
+  ];
+
+  const edges = [
+    { from: 1, to: 2 }, { from: 1, to: 3 }, { from: 1, to: 4 }, { from: 1, to: 5 },
+    { from: 2, to: 6 }, { from: 2, to: 7 }, { from: 2, to: 8 }, { from: 2, to: 9 },
+    { from: 3, to: 6 }, { from: 3, to: 7 }, { from: 3, to: 10 },
+    { from: 4, to: 6 }, { from: 4, to: 11 }, { from: 4, to: 12 }, { from: 4, to: 14 },
+    { from: 5, to: 6 }, { from: 5, to: 13 }
+  ];
+
+  const container = document.getElementById('network');
+  const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+  const options = {
+    nodes: {
+      font: { 
+        size: 10,
+        color: '#f8fafc',
+        face: 'Inter'
+      },
+      borderWidth: 1,
+      shadow: true
+    },
+    edges: {
+      width: 1.5,
+      color: { color: '#2563eb', opacity: 0.6 },
+      smooth: {
+        type: 'cubicBezier',
+        roundness: 0.3
+      }
+    },
+    groups: {
+      person: { 
+        color: { background: '#2563eb', border: '#1d4ed8' },
+        size: 35
+      },
+      project: { 
+        color: { background: '#10b981', border: '#059669' },
+        shape: 'box',
+        size: 25
+      },
+      skill: { 
+        color: { background: '#f43f5e', border: '#e11d48' },
+        shape: 'hexagon',
+        size: 20
+      }
+    },
+    physics: {
+      enabled: true,
+      hierarchicalRepulsion: {
+        nodeDistance: 150
+      },
+      stabilization: {
+        iterations: 100
+      }
+    },
+    layout: {
+      hierarchical: {
+        direction: 'LR',
+        sortMethod: 'directed',
+        levelSeparation: 150,
+        nodeSpacing: 120
+      }
+    }
+  };
+
+  let network;
+  Reveal.on('slidechanged', event => {
+    if (event.currentSlide.querySelector('#network') && !network) {
+      network = new vis.Network(container, data, options);
+    }
+  });
+</script>
+
+</body>
+</html>
