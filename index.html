@@ -278,62 +278,6 @@
 
     let network;
     
-    // API Configuration
-    const API_URL = window.location.hostname.includes('github.io')
-        ? 'https://profile-backend-9kyx.onrender.com'
-        : 'http://localhost:5000';
-    const API_PORT = window.location.hostname.includes('github.io')
-        ? ''
-        : ':5000';
-    
-    console.log('Current hostname:', window.location.hostname);
-    console.log('Using API URL:', API_URL + API_PORT);
-    
-    // Fetch and populate profile data
-    fetch(`${API_URL}${API_PORT}/get_data`)
-      .then(response => {
-        console.log('Response status:', response.status);
-        return response.json();
-      })
-      .then(data => {
-        console.log('Received data:', data);
-        const profileSection = document.getElementById('profile-section');
-        const loadingDiv = profileSection.querySelector('.loading');
-        const table = profileSection.querySelector('.profile-table');
-        const tbody = document.getElementById('profile-tbody');
-        
-        // Clear loading message and show table
-        loadingDiv.style.display = 'none';
-        table.style.display = 'table';
-        
-        data.forEach(profile => {
-          const row = document.createElement('tr');
-          
-          // Add cells
-          row.innerHTML = `
-            <td>${profile['Full Name']}</td>
-            <td>${profile['Designation (Example : Associate Data Science Engineer)']}</td>
-            <td>${profile['Highest Qualification']}</td>
-            <td>${profile['College / University Name']}</td>
-            <td>
-              <a class="linkedin-link" href="${profile['LinkedIn link']}" target="_blank">
-                <i class="fab fa-linkedin"></i> View
-              </a>
-            </td>
-            <td class="comma-list">${profile['Projects']}</td>
-            <td class="comma-list">${profile['Programming Languages\nList the programming languages you are proficient in, separated by commas (e.g., Python, JavaScript, SQL, Java).']}</td>
-            <td class="comma-list">${profile['AI / ML Skills\nList any Artificial Intelligence or Machine Learning tools, libraries, or frameworks you\'re familiar with, separated by commas (e.g., TensorFlow, Scikit-learn, OpenAI API, LangChain, Hugging Face).']}</td>
-            <td class="comma-list">${profile['Tools / Libraries / Frameworks']}</td>
-          `;
-          
-          tbody.appendChild(row);
-        });
-      })
-      .catch(error => {
-        const profileSection = document.getElementById('profile-section');
-        profileSection.innerHTML = `<div class="error">Error loading profiles: ${error.message}</div>`;
-      });
-
     Reveal.on('slidechanged', event => {
       if (event.currentSlide.querySelector('#network') && !network) {
         network = new vis.Network(container, data, options);
