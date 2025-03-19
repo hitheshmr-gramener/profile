@@ -1,5 +1,10 @@
+// API Configuration
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:5000'
+    : 'https://profile-backend-9kyx.onrender.com';
+
 // Fetch data from our Flask backend
-fetch('/get_data')
+fetch(`${API_URL}/get_data`)
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -11,8 +16,9 @@ fetch('/get_data')
       throw new Error('No data received from Google Sheet');
     }
 
+    // Add this before the fetch call
     const table = document.getElementById("sheetTable");
-    table.innerHTML = ''; // Clear existing content
+    table.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
 
     // Add header
     const headerRow = document.createElement("tr");
