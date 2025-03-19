@@ -1,9 +1,24 @@
-# Set default behavior to automatically normalize line endings
-* text=auto eol=lf
+# Auto detect text files and perform LF normalization
+* text=auto
 
-# Force batch scripts to always use CRLF line endings
-*.{cmd,[cC][mM][dD]} text eol=crlf
-*.{bat,[bB][aA][tT]} text eol=crlf
+# Documents
+*.md text diff=markdown
+*.txt text
+*.html text diff=html
+*.css text diff=css
+*.js text
 
-# Force Windows-specific files to use CRLF
-*.{vcxproj,vcxproj.filters} text eol=crlf
+# Python files
+*.py text diff=python
+*.pyw text diff=python
+requirements.txt text
+
+# Serialization
+*.json text
+*.yaml text
+*.yml text
+
+# Git Config
+.gitattributes text
+.gitignore text
+.gitconfig text

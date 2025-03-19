@@ -1,56 +1,44 @@
-# Hithesh M R - Data Scientist Portfolio
+# Profile Display Application
 
-## About Me
-A passionate Data Scientist with expertise in developing and implementing innovative data-driven solutions. Specializing in machine learning, statistical analysis, and data visualization to solve complex business problems.
+A web application that displays professional profiles in a dynamic card layout, pulling data from a Google Sheet source.
 
-## Education
-- **Advanced Analytics and Data Science**
-  Specialized training in cutting-edge data science methodologies and tools
-- **Academic Background**
-  Strong foundation in quantitative analysis and computational methods
+## Features
+- Dynamic profile cards displaying professional information
+- Real-time data fetching from Google Sheets
+- Responsive web interface
+- Clean and modern UI design
 
-## Skills
-### Technical Expertise
-- Machine Learning & AI
-- Statistical Analysis
-- Data Visualization
-- Python Programming
-- Deep Learning
-- Natural Language Processing
-- Big Data Technologies
-- Cloud Computing
+## Data Fields
+Each profile includes:
+- Full Name
+- Designation
+- Highest Qualification
+- College / University Name
+- LinkedIn Profile Link
 
-### Tools & Frameworks
-- TensorFlow/PyTorch
-- Scikit-learn
-- Pandas/NumPy
-- SQL
-- Power BI
-- Git
-- Docker
-- AWS/Azure
+## Technology Stack
+- Frontend: HTML, JavaScript
+- Backend: Flask (Python)
+- Data Source: Google Sheets
 
-### Soft Skills
-- Problem Solving
-- Team Leadership
-- Project Management
-- Communication
-- Stakeholder Management
-- Agile Methodologies
+## Project Structure
+- `/server` - Backend Flask application
+- `/` - Frontend static files
 
-## Projects
-Highlights of key data science projects and implementations:
-- Advanced Machine Learning Models
-- Predictive Analytics Solutions
-- Business Intelligence Dashboards
-- Natural Language Processing Applications
-- Time Series Analysis
-- Computer Vision Projects
+## Getting Started
+1. Navigate to the `server` directory
+2. Follow the setup instructions in `server/README.md`
+3. Start the Flask server
+4. Access the application through your web browser
 
-## Contact
-For collaborations or inquiries, feel free to connect:
-- LinkedIn: [Hithesh M R](https://www.linkedin.com/in/hithesh-mr/)
-- Email: [hitheshmr@gmail.com](mailto:hitheshmr@gmail.com)
-- GitHub: [hitheshmr-gramener](https://github.com/hitheshmr-gramener)
+## Data Source
+The application uses the following Google Sheet as its data source:
+[Google Sheet Link](https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub)
 
+## Dependencies
+- Flask
+- Pandas
+- Requests
+
+For detailed server setup and configuration, please refer to the `server/README.md` file.
 ---
