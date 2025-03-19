@@ -1,22 +1,25 @@
 // API Configuration
 const API_URL = window.location.hostname.includes('github.io') 
     ? 'https://profile-backend-9kyx.onrender.com'
-    : 'http://localhost:5000';
+    : 'http://localhost';
+const API_PORT = window.location.hostname.includes('github.io')
+    ? ''
+    : ':5000';
 
-console.log('Current hostname:', window.location.hostname); // Debug log
-console.log('Using API URL:', API_URL); // Debug log
+console.log('Current hostname:', window.location.hostname); 
+console.log('Using API URL:', API_URL + API_PORT); 
 
 // Fetch data from our Flask backend
-fetch(`${API_URL}/get_data`)
+fetch(`${API_URL}${API_PORT}/get_data`)
   .then(response => {
-    console.log('Response status:', response.status); // Debug log
+    console.log('Response status:', response.status); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     return response.json();
   })
   .then(data => {
-    console.log('Received data:', data); // Debug log
+    console.log('Received data:', data); 
     if (!data || data.length === 0) {
       throw new Error('No data received from Google Sheet');
     }

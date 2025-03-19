@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+  <script src="server/scripts.js" defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -277,10 +278,25 @@
 
     let network;
     
+    // API Configuration
+    const API_URL = window.location.hostname.includes('github.io')
+        ? 'https://profile-backend-9kyx.onrender.com'
+        : 'http://localhost:5000';
+    const API_PORT = window.location.hostname.includes('github.io')
+        ? ''
+        : ':5000';
+    
+    console.log('Current hostname:', window.location.hostname);
+    console.log('Using API URL:', API_URL + API_PORT);
+    
     // Fetch and populate profile data
-    fetch('http://localhost:5000/get_data')
-      .then(response => response.json())
+    fetch(`${API_URL}${API_PORT}/get_data`)
+      .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+      })
       .then(data => {
+        console.log('Received data:', data);
         const profileSection = document.getElementById('profile-section');
         const loadingDiv = profileSection.querySelector('.loading');
         const table = profileSection.querySelector('.profile-table');
