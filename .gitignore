@@ -1,2 +1,5 @@
 # Virtual Environment
 server/.venv/
+.venv/
+__pycache__/
+*.pyc
