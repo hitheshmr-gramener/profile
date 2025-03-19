@@ -43,8 +43,8 @@ jobs:
             "type": "web_service",
             "branch": "main",
             "rootDir": "server",
-            "buildCommand": "pip install -r requirements.txt",
-            "startCommand": "gunicorn main:app",
+            "buildCommand": "pip install -r requirements.txt && pip install gunicorn",
+            "startCommand": "gunicorn --bind 0.0.0.0:$PORT main:app",
             "envVars": [
               {
                 "key": "FLASK_ENV",
@@ -53,6 +53,10 @@ jobs:
               {
                 "key": "PORT",
                 "value": "10000"
+              },
+              {
+                "key": "PYTHON_VERSION",
+                "value": "3.9.0"
               }
             ],
             "plan": "free"
