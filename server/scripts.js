@@ -1,8 +1,9 @@
 // API Configuration
-const API_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5000'
-    : 'https://profile-backend-9kyx.onrender.com';
+const API_URL = window.location.hostname.includes('github.io') 
+    ? 'https://profile-backend-9kyx.onrender.com'
+    : 'http://localhost:5000';
 
+console.log('Current hostname:', window.location.hostname); // Debug log
 console.log('Using API URL:', API_URL); // Debug log
 
 // Fetch data from our Flask backend

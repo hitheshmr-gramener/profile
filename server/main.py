@@ -14,20 +14,18 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 
 app = Flask(__name__, 
-    template_folder=current_dir,  # Set template folder to server directory
-    static_folder=parent_dir     # Set static folder to parent directory for main assets
+    template_folder=current_dir,
+    static_folder=parent_dir
 )
 
-# Enable CORS for specific origins in production
-if os.environ.get('FLASK_ENV') == 'production':
-    CORS(app, resources={r"/*": {"origins": [
-        "https://hitheshmr-gramener.github.io",       # GitHub Pages domain
-        "https://hitheshmr-gramener.github.io/profile", # GitHub Pages project URL
-        "http://localhost:5000",                      # Local development
-        "http://127.0.0.1:5000"                      # Local development alternative
-    ]}})
-else:
-    CORS(app)  # Allow all origins in development
+# Enable CORS for all origins in production (since we're using GitHub Pages)
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub?gid=1674504463&single=true&output=csv"
 
@@ -48,6 +46,7 @@ def get_data():
         response = jsonify(data)
         response.headers['Cache-Control'] = 'public, max-age=300'
         response.headers['Content-Type'] = 'application/json'
+        response.headers['Access-Control-Allow-Origin'] = '*'
         return response
     except Exception as e:
         return str(e), 500
