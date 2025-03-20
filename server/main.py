@@ -14,7 +14,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 
 app = Flask(__name__, 
-    template_folder=current_dir,
+    template_folder=parent_dir,
     static_folder=parent_dir
 )
 
