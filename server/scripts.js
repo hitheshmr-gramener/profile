@@ -101,23 +101,23 @@
       // Update skills section
       const skillsSection = document.getElementById('skills-section');
       const skillsLoadingDiv = skillsSection.querySelector('.loading');
-      const skillsContainer = skillsSection.querySelector('.skills-container');
-
+      
       // Get unique values for each category
       const uniqueLanguages = getUniqueValues(data, 'Programming Languages');
       const uniqueAIML = getUniqueValues(data, 'AI / ML Skills');
       const uniqueTools = getUniqueValues(data, 'Tools / Libraries / Frameworks');
 
-      if (skillsLoadingDiv && skillsContainer) {
-        // Handle skills section
-        skillsLoadingDiv.style.display = 'none';
-        skillsContainer.style.display = 'block';
+      // Update content
+      const toolsContent = document.getElementById('tools-content');
+      const languagesContent = document.getElementById('languages-content');
+      const aimlContent = document.getElementById('aiml-content');
 
-        // Update content
-        document.getElementById('tools-content').innerHTML = createSkillTags(uniqueTools);
-        document.getElementById('languages-content').innerHTML = createSkillTags(uniqueLanguages);
-        document.getElementById('aiml-content').innerHTML = createSkillTags(uniqueAIML);
-      }
+      toolsContent.innerHTML = uniqueTools.map(tool => `<div class="skill-tag">${tool}</div>`).join('');
+      languagesContent.innerHTML = uniqueLanguages.map(lang => `<div class="skill-tag">${lang}</div>`).join('');
+      aimlContent.innerHTML = uniqueAIML.map(skill => `<div class="skill-tag">${skill}</div>`).join('');
+
+      // Hide loading message
+      skillsLoadingDiv.style.display = 'none';
 
       displayProfiles(data);
     })

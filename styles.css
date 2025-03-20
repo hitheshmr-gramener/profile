@@ -101,28 +101,40 @@ body {
   flex: 1;
 }
 
-.skills-container {
-  background: var(--card-bg);
-  padding: 1em;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+#skills-section {
+  padding: 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  align-content: flex-start;
-  height: calc(100vh - 120px);
+  flex-direction: column;
+  gap: 20px;
 }
 
-.skill-category {
-  display: inline-block;
-  margin: 2px;
-  padding: 3px 8px;
-  background: var(--hover-color);
+.tools-frameworks-block {
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.two-column-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.column {
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   border-radius: 10px;
-  border: 1px solid rgba(33, 38, 45, 0.8);
-  font-size: 12px;
-  transition: all 0.2s ease;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
 }
 
 .project-container {
@@ -523,7 +535,7 @@ body {
     width: 100%;
   }
 
-  .skills-container, .project-container {
+  .project-container {
     height: auto;
     max-height: 60vh;
     overflow-y: auto;
@@ -533,10 +545,6 @@ body {
     padding: 10px;
     height: calc(100vh - 20px);
     width: calc(100vw - 20px);
-  }
-
-  .skill-category {
-    font-size: 12px;
   }
 
   .about-section p, .education-section p {
@@ -605,49 +613,40 @@ body {
 }
 
 /* Skills Layout */
-.skills-container {
-  width: 100%;
-  padding: 8px;
-  gap: 10px;
+#skills-section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .tools-frameworks-block {
   background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   border-radius: 8px;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
 .two-column-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 16px;
+  margin-top: 8px;
 }
 
 .column {
   background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   border-radius: 10px;
-  padding: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .skill-content {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  overflow-y: auto;
-  padding: 4px;
-}
-
-.skill-tag {
-  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  white-space: nowrap;
-  border: 1px solid rgba(255,255,255,0.1);
+  gap: 8px;
+  padding: 8px;
 }
 
 h3 {
@@ -892,4 +891,20 @@ h3 {
 
 .tech-table tr td:first-child {
   font-weight: 600;
+}
+
+.skill-tag {
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
 }
