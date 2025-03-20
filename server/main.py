@@ -42,6 +42,8 @@ def get_data():
     try:
         response = requests.get(SHEET_URL, verify=False)
         df = pd.read_csv(io.StringIO(response.text))
+        # Replace NaN values with None before converting to dict
+        df = df.where(pd.notna(df), None)
         data = df.to_dict('records')
         response = jsonify(data)
         response.headers['Cache-Control'] = 'public, max-age=300'
