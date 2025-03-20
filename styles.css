@@ -160,7 +160,7 @@ body {
 
 .section-title {
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
   margin: 0 0 20px 0;
   color: var(--primary-color);
   text-transform: uppercase;
@@ -170,6 +170,19 @@ body {
   background: var(--bg-color);
   border-radius: 4px;
   width: 100%;
+  position: static;
+}
+
+.project-title, .category-header h3, .content-text .section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 8px 0;
+  background: none;
   position: static;
 }
 
@@ -598,19 +611,6 @@ body {
   gap: 10px;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 16px;
-  margin: 0 0 6px 0;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: static;
-  background: #0a0a0a;
-  padding: 10px 0;
-  z-index: 1;
-}
-
 .tools-frameworks-block {
   background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   border-radius: 8px;
@@ -671,8 +671,8 @@ h3 {
 }
 
 .category-icon {
-  font-size: 1em;
-  opacity: 0.9;
+  font-size: 1.2em;
+  color: var(--primary-color);
 }
 
 /* Hide scrollbar but keep functionality */
@@ -735,10 +735,11 @@ h3 {
 
 .profile-name-title {
   flex: 1;
+  font-size: 18px;
 }
 
 .profile-name {
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
   color: #ffffff;
@@ -747,7 +748,7 @@ h3 {
 }
 
 .profile-title {
-  font-size: 11px;
+  font-size: 20px;
   color: rgba(255,255,255,0.7);
   margin: 2px 0 0 0;
 }
