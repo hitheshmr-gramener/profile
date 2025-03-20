@@ -83,6 +83,146 @@
     }
   }
 
+  // Create network visualization
+  function createNetworkGraph(data) {
+    const nodes = [];
+    const edges = [];
+    const employeeNodes = new Set();
+    const projectNodes = new Set();
+
+    // Create nodes for employees and projects
+    data.forEach((profile, index) => {
+      if (!employeeNodes.has(profile['Full Name'])) {
+        nodes.push({
+          id: profile['Full Name'],
+          label: profile['Full Name'],
+          group: 'employee',
+          level: 0, // Top level for employees
+          color: {
+            background: '#4CAF50',
+            border: '#2E7D32',
+            highlight: {
+              background: '#81C784',
+              border: '#2E7D32'
+            }
+          }
+        });
+        employeeNodes.add(profile['Full Name']);
+      }
+
+      // Extract and create project nodes
+      const projects = (profile['Projects'] || '').split(',')
+        .map(p => p.trim())
+        .filter(p => p !== '');
+
+      projects.forEach(project => {
+        if (!projectNodes.has(project)) {
+          nodes.push({
+            id: project,
+            label: project,
+            group: 'project',
+            level: 1, // Bottom level for projects
+            color: {
+              background: '#2196F3',
+              border: '#1565C0',
+              highlight: {
+                background: '#64B5F6',
+                border: '#1565C0'
+              }
+            }
+          });
+          projectNodes.add(project);
+        }
+
+        // Create edge between employee and project
+        edges.push({
+          from: profile['Full Name'],
+          to: project,
+          color: { 
+            color: '#999999',
+            opacity: 0.5,
+            highlight: '#FF4081'
+          }
+        });
+      });
+    });
+
+    // Create network
+    const container = document.getElementById('network');
+    const networkData = { 
+      nodes: new vis.DataSet(nodes), 
+      edges: new vis.DataSet(edges) 
+    };
+
+    const options = {
+      layout: {
+        hierarchical: {
+          direction: 'UD', // Up to Down layout
+          sortMethod: 'directed',
+          nodeSpacing: 150,
+          levelSeparation: 200
+        }
+      },
+      physics: false, // Disable physics for fixed layout
+      nodes: {
+        shape: 'box',
+        size: 20,
+        font: {
+          size: 14,
+          color: '#ffffff'
+        },
+        borderWidth: 2,
+        shadow: true
+      },
+      edges: {
+        width: 2,
+        smooth: {
+          type: 'discrete', // Straight lines
+          forceDirection: 'vertical'
+        },
+        hoverWidth: 3
+      },
+      interaction: {
+        hover: true,
+        navigationButtons: true,
+        keyboard: true
+      }
+    };
+
+    const network = new vis.Network(container, networkData, options);
+
+    // Add click event for highlighting
+    network.on('click', function(params) {
+      if (params.nodes.length > 0) {
+        const nodeId = params.nodes[0];
+        const connectedEdges = network.getConnectedEdges(nodeId);
+        const connectedNodes = network.getConnectedNodes(nodeId);
+
+        // Reset all nodes and edges
+        networkData.nodes.forEach((node) => {
+          node.color.opacity = 1;
+        });
+        networkData.edges.forEach((edge) => {
+          edge.color.opacity = 0.5;
+          edge.color.color = '#999999';
+        });
+
+        // Highlight connected nodes and edges
+        connectedEdges.forEach((edgeId) => {
+          const edge = networkData.edges.get(edgeId);
+          edge.color = {
+            color: '#FF4081',
+            opacity: 1
+          };
+          networkData.edges.update(edge);
+        });
+
+        // Update the network
+        network.redraw();
+      }
+    });
+  }
+
   // Fetch data from our Flask backend
   fetch(`${API_URL}/get_data`)
     .then(response => {
@@ -120,6 +260,7 @@
       skillsLoadingDiv.style.display = 'none';
 
       displayProfiles(data);
+      createNetworkGraph(data);
     })
     .catch(error => {
       console.error('Error:', error);
