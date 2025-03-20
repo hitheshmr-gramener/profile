@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
+  <!-- Add vis.js library -->
+  <link rel="stylesheet" href="https://unpkg.com/vis-network/dist/dist/vis-network.min.css">
 </head>
 <body>
   <div class="reveal">
@@ -16,7 +18,7 @@
 
       <!-- Slide 1: Profile -->
       <section id="profile-section">
-        <h1 class="section-title">Portfolios</h1>
+        <h3>Portfolios</h3>
         <div class="loading">Loading profiles...</div>
         <div class="profile-grid">
           <!-- Profile cards will be inserted here by JavaScript -->
@@ -25,7 +27,7 @@
 
       <!-- Slide 2: Skills -->
       <section id="skills-section">
-        <h2 class="section-title">Technical Expertise</h2>
+        <h3>Technical Expertise</h3>
         <div class="loading">Loading skills...</div>        
         <div class="tools-frameworks-block">
           <div class="category-header">
@@ -55,90 +57,54 @@
 
       <!-- Slide 3: Projects -->
       <section id="projects-section">
-        <div class="projects-container">
-          <h2 class="section-title">Projects</h2>
-          <div class="projects-grid">
-            <div class="project-card detailed">
-              <h3 class="project-title">RAG Framework</h3>
-              <div class="project-content">
-                <div class="section-emoji">📝</div>
-                <div class="section-title">Summary</div>
-                <div class="content-text">
-                  This project implements a Retrieval-Augmented Generation (RAG) pipeline to process, retrieve, and generate responses from PDF documents. The goal is to enable a system that can answer user queries by extracting information from unstructured PDFs, particularly those containing tables and domain-specific content.
-                </div>
-                
-                <div class="section-emoji">⚡</div>
-                <div class="section-title">Workflow</div>
-                <div class="content-text">
-                  <div class="workflow-item">PDF Table Extraction: Tables are extracted using Azure OCR.</div>
-                  <div class="workflow-item">Embedding Generation: The extracted content is embedded to form a vector store that enables semantic search.</div>
-                  <div class="workflow-item">Hybrid Retrieval: Combines both dense vector search and sparse retrieval (BM25) to fetch relevant chunks of information.</div>
-                  <div class="workflow-item">Rank Fusion: Applies rank fusion methods like Reciprocal Rank Fusion, Linear Combination, and Combination Sum to combine and improve the retrieval results.</div>
-                  <div class="workflow-item">Generation: The retrieved context is sent to an LLM to generate a final, context-aware answer.</div>
-                </div>
+        <h3>Projects</h3>
+        <div class="projects-grid">
+          <div class="project-card detailed">
+            <h3 class="project-title">RAG Framework</h3>
+            <div class="project-content">
+              <h3>Summary</h3>
+              <div class="content-text">
+                This project implements a Retrieval-Augmented Generation (RAG) pipeline to process, retrieve, and generate responses from PDF documents. The goal is to enable a system that can answer user queries by extracting information from unstructured PDFs, particularly those containing tables and domain-specific content.
+              </div>
+              
+              <h3>Workflow</h3>
+              <div class="content-text">
+                <div class="workflow-item">PDF Table Extraction: Tables are extracted using Azure OCR.</div>
+                <div class="workflow-item">Embedding Generation: The extracted content is embedded to form a vector store that enables semantic search.</div>
+                <div class="workflow-item">Hybrid Retrieval: Combines both dense vector search and sparse retrieval (BM25) to fetch relevant chunks of information.</div>
+                <div class="workflow-item">Rank Fusion: Applies rank fusion methods like Reciprocal Rank Fusion, Linear Combination, and Combination Sum to combine and improve the retrieval results.</div>
+                <div class="workflow-item">Generation: The retrieved context is sent to an LLM to generate a final, context-aware answer.</div>
+              </div>
 
-                <div class="section-emoji">🛠️</div>
-                <div class="section-title">Tools & Technologies</div>
-                <div class="content-text">
-                  <table class="tech-table">
-                    <tr><td>OCR & Table Extraction</td><td>Azure OCR</td></tr>
-                    <tr><td>Embeddings</td><td>Sentence Transformers or OpenAI Embeddings</td></tr>
-                    <tr><td>Vector Search</td><td>FAISS, Chroma, or Pinecone</td></tr>
-                    <tr><td>Sparse Retrieval</td><td>BM25 via Rank-BM25 or Whoosh</td></tr>
-                    <tr><td>Rank Fusion</td><td>Custom Implementation of Reciprocal Rank Fusion, Linear Combination, Combination Sum</td></tr>
-                    <tr><td>LLM Integration</td><td>OpenAI API or Azure OpenAI</td></tr>
-                    <tr><td>Backend</td><td>Python</td></tr>
-                    <tr><td>Data Format</td><td>PDF, CSV, JSON</td></tr>
-                    <tr><td>Deployment / Infra</td><td>Azure services (for OCR & LLM)</td></tr>
-                  </table>
-                </div>
+              <h3>Tools & Technologies</h3>
+              <div class="tech-table-container">
+                <table class="tech-table">
+                  <tr><td>OCR & Table Extraction</td><td>Azure OCR</td></tr>
+                  <tr><td>Embeddings</td><td>Sentence Transformers or OpenAI Embeddings</td></tr>
+                  <tr><td>Vector Search</td><td>FAISS, Chroma, or Pinecone</td></tr>
+                  <tr><td>Sparse Retrieval</td><td>BM25 via Rank-BM25 or Whoosh</td></tr>
+                  <tr><td>Rank Fusion</td><td>Custom Implementation of Reciprocal Rank Fusion, Linear Combination, Combination Sum</td></tr>
+                  <tr><td>LLM Integration</td><td>OpenAI API or Azure OpenAI</td></tr>
+                  <tr><td>Backend</td><td>Python</td></tr>
+                  <tr><td>Data Format</td><td>PDF, CSV, JSON</td></tr>
+                  <tr><td>Deployment / Infra</td><td>Azure services (for OCR & LLM)</td></tr>
+                </table>
               </div>
             </div>
-            <div class="project-card">
-              <h3>XPERI</h3>
-              <div class="project-content">XPERI project implementation</div>
-            </div>
-            <div class="project-card">
-              <h3>Obituary</h3>
-              <div class="project-content">Obituary processing system</div>
-            </div>
-            <div class="project-card">
-              <h3>MH Avvo</h3>
-              <div class="project-content">MH Avvo project implementation</div>
-            </div>
-            <div class="project-card">
-              <h3>Alt-text</h3>
-              <div class="project-content">Alternative text generation system</div>
-            </div>
-            <div class="project-card">
-              <h3>NatGen</h3>
-              <div class="project-content">Natural language generation project</div>
-            </div>
-            <div class="project-card">
-              <h3>Timesheet Generator</h3>
-              <div class="project-content">JIRA-based timesheet generation PoC</div>
-            </div>
-            <div class="project-card">
-              <h3>Traffic Analysis</h3>
-              <div class="project-content">Traffic analysis proof of concept</div>
-            </div>
-            <div class="project-card">
-              <h3>Embase Indexing</h3>
-              <div class="project-content">Embase content indexing system</div>
-            </div>
-            <div class="project-card">
-              <h3>Consolidated UI</h3>
-              <div class="project-content">Consolidated user interface implementation</div>
-            </div>
           </div>
+          <!-- Other project cards -->
         </div>
       </section>
 
       <!-- Slide 4: K-Partite Graph -->
-      <section>
-        <h2>Skills & Projects Network</h2>
+      <section id="network-section">
+        <h3>Skills & Projects Network</h3>
         <div id="network-container">
           <div id="network"></div>
+          <div class="network-legend">
+            <div class="legend-item"><span class="legend-dot employee"></span>Employees</div>
+            <div class="legend-item"><span class="legend-dot project"></span>Projects</div>
+          </div>
         </div>
       </section>
 

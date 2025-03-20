@@ -44,6 +44,12 @@ def get_data():
         df = pd.read_csv(io.StringIO(response.text))
         # Replace NaN values with None before converting to dict
         df = df.where(pd.notna(df), None)
+        # Ensure all required columns are present
+        required_columns = ['Full Name', 'Designation', 'Highest Qualification', 
+                          'College / University Name', 'LinkedIn link', 'Projects']
+        for col in required_columns:
+            if col not in df.columns:
+                df[col] = None
         data = df.to_dict('records')
         response = jsonify(data)
         response.headers['Cache-Control'] = 'public, max-age=300'
