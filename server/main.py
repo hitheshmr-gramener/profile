@@ -51,7 +51,7 @@ def get_data():
         response.headers['Access-Control-Allow-Origin'] = '*'
         return response
     except Exception as e:
-        return str(e), 500
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
