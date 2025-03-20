@@ -9,266 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    /* Base styles */
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background-color: #0a0a0a;
-      color: #ffffff;
-    }
-
-    /* Reveal.js overrides */
-    .reveal .slides section {
-      height: 100vh;
-      padding: 20px;
-      overflow-y: auto !important;
-    }
-
-    .reveal .slides {
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 100% !important;
-      transform: none !important;
-    }
-
-    /* Custom scrollbar for the slide */
-    .reveal .slides section::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .reveal .slides section::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .reveal .slides section::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
-    }
-
-    /* Skills Layout */
-    .skills-container {
-      width: 100%;
-      padding: 8px;
-      gap: 10px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 16px;
-      margin: 0 0 6px 0;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      position: sticky;
-      top: 0;
-      background: #0a0a0a;
-      padding: 10px 0;
-      z-index: 1;
-    }
-
-    .tools-frameworks-block {
-      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 8px;
-    }
-
-    .two-column-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .column {
-      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      border-radius: 10px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .skill-content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      overflow-y: auto;
-      padding: 4px;
-    }
-
-    .skill-tag {
-      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    h3 {
-      margin: 0 0 8px 0;
-      color: #ffffff;
-      font-size: 1.1em;
-      font-weight: 600;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Category Icons */
-    .category-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .category-icon {
-      font-size: 1em;
-      opacity: 0.9;
-    }
-
-    /* Hide scrollbar but keep functionality */
-    .skill-content::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    .skill-content::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .skill-content::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 3px;
-    }
-
-    /* Profile Cards */
-    .profile-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 15px;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    .profile-card {
-      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      border-radius: 8px;
-      padding: 12px 20px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .profile-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 250px;
-    }
-
-    .profile-image {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .profile-name-title {
-      flex: 1;
-    }
-
-    .profile-name {
-      font-size: 11px;
-      font-weight: 600;
-      margin: 0;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .profile-title {
-      font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      margin: 2px 0 0 0;
-    }
-
-    .profile-info {
-      display: flex;
-      gap: 30px;
-      flex: 1;
-    }
-
-    .info-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      min-width: 200px;
-    }
-
-    .info-icon {
-      color: rgba(255,255,255,0.6);
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .info-content {
-      flex: 1;
-    }
-
-    .info-label {
-      color: rgba(255,255,255,0.6);
-      font-size: 11px;
-      margin-bottom: 2px;
-    }
-
-    .info-value {
-      font-size: 12px;
-      color: rgba(255,255,255,0.9);
-    }
-
-    .linkedin-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: #0077b5;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 11px;
-      transition: background 0.3s ease;
-      white-space: nowrap;
-    }
-
-    .linkedin-button:hover {
-      background: #005885;
-    }
-
-    /* Profile section title */
-    #profile-section .section-title {
-      font-size: 16px;
-      margin-bottom: 15px;
-      text-align: center;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-  </style>
 </head>
 <body>
   <div class="reveal">
@@ -317,24 +57,82 @@
       </section>
 
       <!-- Slide 3: Projects -->
-      <section>
-        <h2>Projects</h2>
-        <div class="project-container">
-          <div class="project-card">
-            <h3><strong>RAG Framework</strong></h3>
-            <p>AI-based financial document querying</p>
-          </div>
-          <div class="project-card">
-            <h3><strong>Timesheet Generator (POC)</strong></h3>
-            <p>Jira integration with LLM-powered automation</p>
-          </div>
-          <div class="project-card">
-            <h3><strong>Traffic Visualization (Malaysia POC)</strong></h3>
-            <p>Predictive traffic modeling and geospatial analytics</p>
-          </div>
-          <div class="project-card">
-            <h3><strong>Mammogram Tumor Segmentation</strong></h3>
-            <p>Medical image segmentation using UNet & SAM</p>
+      <section id="projects-section">
+        <div class="projects-container">
+          <h2 class="section-title">Projects</h2>
+          <div class="projects-grid">
+            <div class="project-card detailed">
+              <h3 class="project-title">RAG Framework</h3>
+              <div class="project-content">
+                <div class="section-emoji">📝</div>
+                <div class="section-title">Summary</div>
+                <div class="content-text">
+                  This project implements a Retrieval-Augmented Generation (RAG) pipeline to process, retrieve, and generate responses from PDF documents. The goal is to enable a system that can answer user queries by extracting information from unstructured PDFs, particularly those containing tables and domain-specific content.
+                </div>
+                
+                <div class="section-emoji">⚡</div>
+                <div class="section-title">Workflow</div>
+                <div class="content-text">
+                  <div class="workflow-item">PDF Table Extraction: Tables are extracted using Azure OCR.</div>
+                  <div class="workflow-item">Embedding Generation: The extracted content is embedded to form a vector store that enables semantic search.</div>
+                  <div class="workflow-item">Hybrid Retrieval: Combines both dense vector search and sparse retrieval (BM25) to fetch relevant chunks of information.</div>
+                  <div class="workflow-item">Rank Fusion: Applies rank fusion methods like Reciprocal Rank Fusion, Linear Combination, and Combination Sum to combine and improve the retrieval results.</div>
+                  <div class="workflow-item">Generation: The retrieved context is sent to an LLM to generate a final, context-aware answer.</div>
+                </div>
+
+                <div class="section-emoji">🛠️</div>
+                <div class="section-title">Tools & Technologies</div>
+                <div class="content-text">
+                  <table class="tech-table">
+                    <tr><td>OCR & Table Extraction</td><td>Azure OCR</td></tr>
+                    <tr><td>Embeddings</td><td>Sentence Transformers or OpenAI Embeddings</td></tr>
+                    <tr><td>Vector Search</td><td>FAISS, Chroma, or Pinecone</td></tr>
+                    <tr><td>Sparse Retrieval</td><td>BM25 via Rank-BM25 or Whoosh</td></tr>
+                    <tr><td>Rank Fusion</td><td>Custom Implementation of Reciprocal Rank Fusion, Linear Combination, Combination Sum</td></tr>
+                    <tr><td>LLM Integration</td><td>OpenAI API or Azure OpenAI</td></tr>
+                    <tr><td>Backend</td><td>Python</td></tr>
+                    <tr><td>Data Format</td><td>PDF, CSV, JSON</td></tr>
+                    <tr><td>Deployment / Infra</td><td>Azure services (for OCR & LLM)</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="project-card">
+              <h3>XPERI</h3>
+              <div class="project-content">XPERI project implementation</div>
+            </div>
+            <div class="project-card">
+              <h3>Obituary</h3>
+              <div class="project-content">Obituary processing system</div>
+            </div>
+            <div class="project-card">
+              <h3>MH Avvo</h3>
+              <div class="project-content">MH Avvo project implementation</div>
+            </div>
+            <div class="project-card">
+              <h3>Alt-text</h3>
+              <div class="project-content">Alternative text generation system</div>
+            </div>
+            <div class="project-card">
+              <h3>NatGen</h3>
+              <div class="project-content">Natural language generation project</div>
+            </div>
+            <div class="project-card">
+              <h3>Timesheet Generator</h3>
+              <div class="project-content">JIRA-based timesheet generation PoC</div>
+            </div>
+            <div class="project-card">
+              <h3>Traffic Analysis</h3>
+              <div class="project-content">Traffic analysis proof of concept</div>
+            </div>
+            <div class="project-card">
+              <h3>Embase Indexing</h3>
+              <div class="project-content">Embase content indexing system</div>
+            </div>
+            <div class="project-card">
+              <h3>Consolidated UI</h3>
+              <div class="project-content">Consolidated user interface implementation</div>
+            </div>
           </div>
         </div>
       </section>

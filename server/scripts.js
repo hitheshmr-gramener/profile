@@ -69,7 +69,12 @@
       loading.style.display = 'none';
       profileGrid.style.display = 'grid';
       
-      profiles.forEach(profile => {
+      // Sort profiles by Full Name
+      const sortedProfiles = [...profiles].sort((a, b) => 
+        a['Full Name'].localeCompare(b['Full Name'])
+      );
+      
+      sortedProfiles.forEach(profile => {
         const card = createProfileCard(profile);
         profileGrid.appendChild(card);
       });
