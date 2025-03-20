@@ -10,21 +10,263 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
   <style>
+    /* Base styles */
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f5f5f5;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: #0a0a0a;
+      color: #ffffff;
     }
+
     /* Reveal.js overrides */
     .reveal .slides section {
       height: 100vh;
-      padding: 0;
+      padding: 20px;
+      overflow-y: auto !important;
     }
+
     .reveal .slides {
       width: 100% !important;
       height: 100% !important;
       min-height: 100% !important;
       transform: none !important;
+    }
+
+    /* Custom scrollbar for the slide */
+    .reveal .slides section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .reveal .slides section::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .reveal .slides section::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    /* Skills Layout */
+    .skills-container {
+      width: 100%;
+      padding: 8px;
+      gap: 10px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 16px;
+      margin: 0 0 6px 0;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: sticky;
+      top: 0;
+      background: #0a0a0a;
+      padding: 10px 0;
+      z-index: 1;
+    }
+
+    .tools-frameworks-block {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    .two-column-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .column {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .skill-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .skill-tag {
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h3 {
+      margin: 0 0 8px 0;
+      color: #ffffff;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Category Icons */
+    .category-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .category-icon {
+      font-size: 1em;
+      opacity: 0.9;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .skill-content::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .skill-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .skill-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+
+    /* Profile Cards */
+    .profile-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 15px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .profile-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border-radius: 8px;
+      padding: 12px 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 250px;
+    }
+
+    .profile-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .profile-name-title {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-size: 11px;
+      font-weight: 600;
+      margin: 0;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-title {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      margin: 2px 0 0 0;
+    }
+
+    .profile-info {
+      display: flex;
+      gap: 30px;
+      flex: 1;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      min-width: 200px;
+    }
+
+    .info-icon {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-label {
+      color: rgba(255,255,255,0.6);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .linkedin-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #0077b5;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 11px;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .linkedin-button:hover {
+      background: #005885;
+    }
+
+    /* Profile section title */
+    #profile-section .section-title {
+      font-size: 16px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
   </style>
 </head>
@@ -34,36 +276,43 @@
 
       <!-- Slide 1: Profile -->
       <section id="profile-section">
+        <h2 class="section-title">Portfolios</h2>
         <div class="loading">Loading profiles...</div>
-        <table class="profile-table" style="display: none;">
-          <thead>
-            <tr>
-              <th>Full Name</th>
-              <th>Designation</th>
-              <th>Qualification</th>
-              <th>Institution</th>
-              <th>LinkedIn</th>
-              <th>Projects</th>
-              <th>Languages</th>
-              <th>AI/ML Skills</th>
-              <th>Tools & Frameworks</th>
-            </tr>
-          </thead>
-          <tbody id="profile-tbody">
-          </tbody>
-        </table>
+        <div class="profile-grid">
+          <!-- Profile cards will be inserted here by JavaScript -->
+        </div>
       </section>
 
-      <!-- Slide 2: Technology Skills -->
-      <section>
-        <h2>Technology Skills</h2>
+      <!-- Slide 2: Skills -->
+      <section id="skills-section">
+        <div class="loading">Loading skills...</div>
         <div class="skills-container">
-          <div class="skill-category">Python, JavaScript, SQL, HTML/CSS, YAML</div>
-          <div class="skill-category">Machine Learning, LLMs, RAG, OpenAI, LangChain</div>
-          <div class="skill-category">PostgreSQL (pgvector), Flask, Jira REST API</div>
-          <div class="skill-category">Geospatial Tech: Turf.js, Mapbox GL JS, ArcGIS</div>
-          <div class="skill-category">AWS, Azure, Git, GitLab CI/CD</div>
-          <div class="skill-category">Evaluation: Precision@K, MMR, NDCG</div>
+          <h2 class="section-title">Technical Expertise</h2>
+          
+          <div class="tools-frameworks-block">
+            <div class="category-header">
+              <i class="fas fa-tools category-icon"></i>
+              <h3>Tools & Frameworks</h3>
+            </div>
+            <div id="tools-content" class="skill-content"></div>
+          </div>
+
+          <div class="two-column-container">
+            <div class="column">
+              <div class="category-header">
+                <i class="fas fa-code category-icon"></i>
+                <h3>Programming Languages</h3>
+              </div>
+              <div id="languages-content" class="skill-content"></div>
+            </div>
+            <div class="column">
+              <div class="category-header">
+                <i class="fas fa-brain category-icon"></i>
+                <h3>AI/ML Skills</h3>
+              </div>
+              <div id="aiml-content" class="skill-content"></div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -421,3 +421,178 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Base styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* Reveal.js overrides */
+.reveal .slides section {
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto !important;
+}
+
+.reveal .slides {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  transform: none !important;
+}
+
+/* Custom scrollbar for the slide */
+.reveal .slides section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reveal .slides section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reveal .slides section::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* Skills Layout */
+.skills-container {
+  width: 100%;
+  padding: 8px;
+  gap: 10px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 16px;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: sticky;
+  top: 0;
+  background: #0a0a0a;
+  padding: 10px 0;
+  z-index: 1;
+}
+
+/* Profile Cards */
+.profile-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.profile-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border-radius: 6px;
+  padding: 8px 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.profile-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.profile-name-title {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-title {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  margin: 2px 0 0 0;
+}
+
+.profile-info {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.info-icon {
+  color: rgba(255,255,255,0.6);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-label {
+  color: rgba(255,255,255,0.6);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.info-value {
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
+}
+
+.linkedin-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #0077b5;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 11px;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.linkedin-button:hover {
+  background: #005885;
+}
+
+/* Profile section title */
+#profile-section .section-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
