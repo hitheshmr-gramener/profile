@@ -43,56 +43,39 @@ profile/
 ```mermaid
 graph TB
     %% Main Flow
-    A[🧑 User Input] -->|1. Submits Data| B[📝 Google Form]
-    B -->|2. Stores Data| C[📊 Google Sheet]
-    C -->|3. Published URL| D[⚙️ Flask Backend]
-    D -->|4. /get_data API| E[🖥️ Frontend App]
-    E -->|5. Renders| F[🎴 Profile Cards]
+    A[User Input] -->|Submits Data| B[Google Form]
+    B -->|Stores Data| C[Google Sheet]
+    C -->|Published URL| D[Flask Backend]
+    D -->|/get_data API| E[Frontend Application]
+    E -->|Renders| F[Profile Cards]
 
     %% Data Flow Section
-    subgraph Data_Flow[📋 Form Fields]
-        direction TB
-        B --> |Field| G[👤 Full Name]
-        B --> |Field| H[💼 Designation]
-        B --> |Field| I[🎓 Qualification]
-        B --> |Field| J[🏛️ University]
-        B --> |Field| K[🔗 LinkedIn]
-        B --> |Field| L[💡 Projects]
+    subgraph Data_Fields[Form Fields]
+        B --> |Field| G[Full Name]
+        B --> |Field| H[Designation]
+        B --> |Field| I[Highest Qualification]
+        B --> |Field| J[College/University]
+        B --> |Field| K[LinkedIn Link]
+        B --> |Field| L[Projects]
     end
 
     %% Backend Processing
-    subgraph Backend[🔧 Backend Processing]
-        direction LR
-        M[📥 Data Fetch]
-        N[✅ Validation]
-        O[📤 API Response]
+    subgraph Backend[Backend Processing]
+        M[Data Fetch]
+        N[Validation]
+        O[API Response]
         M --> N --> O
     end
     D --> Backend
 
     %% Frontend Section
-    subgraph Frontend[🎨 Frontend]
-        direction TB
-        P[⚡ JavaScript]
-        Q[🎴 Card Creation]
-        R[📱 Responsive UI]
+    subgraph Frontend[Frontend]
+        P[JavaScript Processing]
+        Q[Card Creation]
+        R[Responsive Display]
         P --> Q --> R
     end
     E --> Frontend
-
-    %% Styling
-    classDef primary fill:#f9f,stroke:#333,stroke-width:2px
-    classDef secondary fill:#bbf,stroke:#333,stroke-width:2px
-    classDef tertiary fill:#bfb,stroke:#333,stroke-width:2px
-    classDef quaternary fill:#fbf,stroke:#333,stroke-width:2px
-    
-    class A,B primary
-    class C,D secondary
-    class E,F tertiary
-    class G,H,I,J,K,L quaternary
-
-    %% Link Styling
-    linkStyle default stroke:#333,stroke-width:2px
 ```
 
 ## Dependencies
