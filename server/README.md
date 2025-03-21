@@ -4,13 +4,47 @@ A Flask-based server application that fetches and serves profile data from a Goo
 
 ## Features
 
-- Serves a static HTML frontend
-- Fetches data from Google Spreadsheet
-- Provides REST API endpoint for profile data retrieval
-- Handles CORS and SSL verification
-- Dynamic profile data updates
+- RESTful API endpoint for profile data retrieval
+- Real-time data fetching from Google Sheets
+- Pandas-based data processing and validation
+- CORS enabled for cross-origin requests
+- Error handling and data validation
+- Serves static frontend files
 
-## Setup
+## Data Structure
+
+The server handles the following profile fields:
+- Full Name
+- Designation
+- Highest Qualification
+- College / University Name
+- LinkedIn Link
+- Projects
+
+## Server Architecture
+
+```mermaid
+graph TB
+    A[Google Sheet] -->|CSV Data| B[Flask Server]
+    B -->|Data Processing| C[Pandas]
+    C -->|Validation| D[JSON Response]
+    
+    subgraph API_Endpoints[API Endpoints]
+        E[GET /] -->|Serves| F[Static Frontend]
+        G[GET /get_data] -->|Returns| H[Profile JSON]
+    end
+    
+    subgraph Error_Handling[Error Handling]
+        I[Data Validation]
+        J[SSL Verification]
+        K[CORS Handling]
+    end
+    
+    B --> API_Endpoints
+    B --> Error_Handling
+```
+
+## Setup Instructions
 
 1. Create a virtual environment:
    ```bash
@@ -25,53 +59,72 @@ A Flask-based server application that fetches and serves profile data from a Goo
 
 ## Project Structure
 
-- `main.py` - Flask server implementation
-- `index.html` - Frontend HTML template
-- `scripts.js` - Frontend JavaScript code for profile card rendering
-- `requirements.txt` - Python dependencies
+```
+server/
+├── main.py              # Flask server implementation
+├── requirements.txt     # Python dependencies
+└── README.md           # Server documentation
+```
 
 ## API Endpoints
 
 ### GET /
-Serves the main HTML page with profile cards
+- Purpose: Serves the main HTML page
+- Response: HTML template for profile cards
+- Location: Served from parent directory
 
 ### GET /get_data
-Returns profile data in JSON format
-
-Response format:
-```json
-[
-  {
-    "Full Name": "string",
-    "Designation": "string",
-    "Highest Qualification": "string",
-    "College / University Name": "string",
-    "LinkedIn": "string"
-  },
-  ...
-]
-```
-
-## Running the Server
-
-```bash
-python main.py
-```
-
-The server will start on `http://localhost:5000`
+- Purpose: Retrieves profile data
+- Response Format: JSON array of profiles
+- Fields:
+  ```json
+  [
+    {
+      "Full Name": "string",
+      "Designation": "string",
+      "Highest Qualification": "string",
+      "College / University Name": "string",
+      "LinkedIn link": "string",
+      "Projects": "string"
+    }
+  ]
+  ```
 
 ## Dependencies
 
-- Flask - Web framework
-- Pandas - Data handling
-- Requests - HTTP client
+All dependencies are specified in requirements.txt:
+- Flask==2.3.3
+- Werkzeug==2.3.7
+- Pandas==2.0.3
+- NumPy==1.24.3
+- Requests==2.31.0
+- Flask-CORS==4.0.0
+- Gunicorn==21.2.0
+
+## Running the Server
+
+Development:
+```bash
+python main.py
+```
+The server will start on `http://localhost:5000`
+
+Production:
+```bash
+gunicorn main:app
+```
 
 ## Data Source
-The application fetches data from a published Google Sheet:
-https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub
 
-## Notes
+The application fetches data from this published Google Sheet:
+[Google Sheet Link](https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub)
+
+## Technical Notes
 
 - SSL verification is disabled for Google Sheets access
-- The application uses the current directory for both templates and static files
-- Profile data is dynamically updated when the Google Sheet changes
+- CORS is enabled for all origins to support various deployment scenarios
+- Static files are served from the parent directory
+- Environment-based debug mode configuration
+- Gunicorn WSGI server support for production deployment
+- Error handling for missing or invalid data
+- Automatic data type validation using Pandas
