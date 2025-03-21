@@ -58,43 +58,65 @@
       <!-- Slide 3: Projects -->
       <section id="projects-section">
         <h3>Projects</h3>
-        <div class="projects-grid">
-          <div class="project-card detailed">
-            <h3 class="project-title">RAG Framework</h3>
-            <div class="project-content">
-              <h3>Summary</h3>
-              <div class="content-text">
-                This project implements a Retrieval-Augmented Generation (RAG) pipeline to process, retrieve, and generate responses from PDF documents. The goal is to enable a system that can answer user queries by extracting information from unstructured PDFs, particularly those containing tables and domain-specific content.
-              </div>
-              
-              <h3>Workflow</h3>
-              <div class="content-text">
-                <div class="workflow-item">PDF Table Extraction: Tables are extracted using Azure OCR.</div>
-                <div class="workflow-item">Embedding Generation: The extracted content is embedded to form a vector store that enables semantic search.</div>
-                <div class="workflow-item">Hybrid Retrieval: Combines both dense vector search and sparse retrieval (BM25) to fetch relevant chunks of information.</div>
-                <div class="workflow-item">Rank Fusion: Applies rank fusion methods like Reciprocal Rank Fusion, Linear Combination, and Combination Sum to combine and improve the retrieval results.</div>
-                <div class="workflow-item">Generation: The retrieved context is sent to an LLM to generate a final, context-aware answer.</div>
-              </div>
-
-              <h3>Tools & Technologies</h3>
-              <div class="tech-table-container">
-                <table class="tech-table">
-                  <tr><td>OCR & Table Extraction</td><td>Azure OCR</td></tr>
-                  <tr><td>Embeddings</td><td>Sentence Transformers or OpenAI Embeddings</td></tr>
-                  <tr><td>Vector Search</td><td>FAISS, Chroma, or Pinecone</td></tr>
-                  <tr><td>Sparse Retrieval</td><td>BM25 via Rank-BM25 or Whoosh</td></tr>
-                  <tr><td>Rank Fusion</td><td>Custom Implementation of Reciprocal Rank Fusion, Linear Combination, Combination Sum</td></tr>
-                  <tr><td>LLM Integration</td><td>OpenAI API or Azure OpenAI</td></tr>
-                  <tr><td>Backend</td><td>Python</td></tr>
-                  <tr><td>Data Format</td><td>PDF, CSV, JSON</td></tr>
-                  <tr><td>Deployment / Infra</td><td>Azure services (for OCR & LLM)</td></tr>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- Other project cards -->
+        <div id="projects-grid" class="projects-grid">
+          <!-- Project cards will be dynamically inserted here -->
         </div>
       </section>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Define API URL based on hostname
+          const API_URL = window.location.hostname.includes('localhost') 
+              ? 'http://localhost:5000'
+              : 'https://profile-backend-9kyx.onrender.com';
+
+          // Function to get unique values from comma-separated strings
+          function getUniqueProjects(data) {
+            const allProjects = data
+              .map(item => (item.Projects || '').split(','))
+              .flat()
+              .map(project => project.trim())
+              .filter(project => project !== '');
+            return [...new Set(allProjects)].sort();
+          }
+
+          // Function to create a project card
+          function createProjectCard(projectName) {
+            return `
+              <div class="project-card detailed">
+                <h3 class="project-title">${projectName}</h3>
+                <div class="project-content">
+                  <h3>Summary</h3>
+                  <div class="content-text">
+                    Project details for ${projectName}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          // Fetch data and create visualizations
+          fetch(API_URL + '/get_data')
+            .then(response => response.json())
+            .then(data => {
+              // Get unique projects and create project cards
+              const uniqueProjects = getUniqueProjects(data);
+              console.log('List of Unique Projects:', uniqueProjects);
+
+              const projectsGrid = document.getElementById('projects-grid');
+              uniqueProjects.forEach(project => {
+                projectsGrid.innerHTML += createProjectCard(project);
+              });
+
+              // Create network visualization
+              createNetworkVisualization(data);
+            })
+            .catch(error => {
+              console.error('Error loading data:', error);
+              document.getElementById('projects-grid').innerHTML = '<p>Error loading projects</p>';
+            });
+        });
+      </script>
 
       <!-- Slide 4: K-Partite Graph -->
       <section id="network-section">
@@ -116,6 +138,7 @@
   <script src="server/scripts.js" defer></script>
 
   <script>
+    // Initialize Reveal.js
     Reveal.initialize({
       controls: true,
       progress: true,
@@ -139,38 +162,8 @@
       autoSlide: 0
     });
 
-    const nodes = [
-      { id: 1, label: 'Hithesh', group: 'person', shape: 'circularImage', image: 'https://img.icons8.com/color/96/000000/user-male-circle--v1.png' },
-
-      // Projects
-      { id: 2, label: 'RAG Framework', group: 'project' },
-      { id: 3, label: 'Timesheet Generator', group: 'project' },
-      { id: 4, label: 'Traffic Visualization', group: 'project' },
-      { id: 5, label: 'Mammogram Segmentation', group: 'project' },
-
-      // Skills
-      { id: 6, label: 'Python', group: 'skill' },
-      { id: 7, label: 'OpenAI API', group: 'skill' },
-      { id: 8, label: 'LangChain', group: 'skill' },
-      { id: 9, label: 'pgvector', group: 'skill' },
-      { id: 10, label: 'Jira REST API', group: 'skill' },
-      { id: 11, label: 'Mapbox GL JS', group: 'skill' },
-      { id: 12, label: 'ArcGIS', group: 'skill' },
-      { id: 13, label: 'UNet & SAM', group: 'skill' },
-      { id: 14, label: 'Flask', group: 'skill' }
-    ];
-
-    const edges = [
-      { from: 1, to: 2 }, { from: 1, to: 3 }, { from: 1, to: 4 }, { from: 1, to: 5 },
-      { from: 2, to: 6 }, { from: 2, to: 7 }, { from: 2, to: 8 }, { from: 2, to: 9 },
-      { from: 3, to: 6 }, { from: 3, to: 7 }, { from: 3, to: 10 },
-      { from: 4, to: 6 }, { from: 4, to: 11 }, { from: 4, to: 12 }, { from: 4, to: 14 },
-      { from: 5, to: 6 }, { from: 5, to: 13 }
-    ];
-
-    const container = document.getElementById('network');
-    const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
-    const options = {
+    // Network options
+    const networkOptions = {
       nodes: {
         font: { 
           size: 10,
@@ -184,52 +177,53 @@
         width: 1.5,
         color: { color: '#2563eb', opacity: 0.6 },
         smooth: {
-          type: 'cubicBezier',
-          roundness: 0.3
-        }
-      },
-      groups: {
-        person: { 
-          color: { background: '#2563eb', border: '#1d4ed8' },
-          size: 35
-        },
-        project: { 
-          color: { background: '#10b981', border: '#059669' },
-          shape: 'box',
-          size: 25
-        },
-        skill: { 
-          color: { background: '#f43f5e', border: '#e11d48' },
-          shape: 'hexagon',
-          size: 20
-        }
-      },
-      physics: {
-        enabled: true,
-        hierarchicalRepulsion: {
-          nodeDistance: 150
-        },
-        stabilization: {
-          iterations: 100
-        }
-      },
-      layout: {
-        hierarchical: {
-          direction: 'LR',
-          sortMethod: 'directed',
-          levelSeparation: 150,
-          nodeSpacing: 120
+          type: 'cubicBezier'
         }
       }
     };
 
-    let network;
-    
-    Reveal.on('slidechanged', event => {
-      if (event.currentSlide.querySelector('#network') && !network) {
-        network = new vis.Network(container, data, options);
-      }
-    });
+    // Update createNetworkVisualization to use the network options
+    function createNetworkVisualization(data) {
+      const container = document.getElementById('network');
+      if (!container) return;
+
+      let nodeId = 1;
+      const nodes = [];
+      const edges = [];
+      const nodeMap = new Map();
+
+      // Add person nodes
+      data.forEach(person => {
+        const personId = nodeId++;
+        nodes.push({
+          id: personId,
+          label: person['Full Name'],
+          group: 'person',
+          shape: 'circularImage',
+          image: 'https://img.icons8.com/color/96/000000/user-male-circle--v1.png'
+        });
+
+        // Add project nodes and edges
+        const projects = (person.Projects || '').split(',').map(p => p.trim()).filter(p => p);
+        projects.forEach(project => {
+          let projectId = nodeMap.get(project);
+          if (!projectId) {
+            projectId = nodeId++;
+            nodeMap.set(project, projectId);
+            nodes.push({ id: projectId, label: project, group: 'project' });
+          }
+          edges.push({ from: personId, to: projectId });
+        });
+      });
+
+      // Create the network
+      const networkData = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges)
+      };
+
+      new vis.Network(container, networkData, networkOptions);
+    }
   </script>
 
 </body>
