@@ -895,7 +895,7 @@ h3 {
 /* Project Cards */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 20px;
 }
@@ -1024,7 +1024,7 @@ h3 {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-top: 20px;
 }
@@ -1087,4 +1087,10 @@ h3 {
 .legend-dot.project {
   background-color: #2196F3;
   border: 2px solid #1565C0;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }

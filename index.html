@@ -63,75 +63,83 @@
         </div>
       </section>
 
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          // Define API URL based on hostname
-          const API_URL = window.location.hostname.includes('localhost') 
-              ? 'http://localhost:5000'
-              : 'https://profile-backend-9kyx.onrender.com';
-
-          // Function to get unique values from comma-separated strings
-          function getUniqueProjects(data) {
-            const allProjects = data
-              .map(item => (item.Projects || '').split(','))
-              .flat()
-              .map(project => project.trim())
-              .filter(project => project !== '');
-            return [...new Set(allProjects)].sort();
-          }
-
-          // Function to create a project card
-          function createProjectCard(projectName) {
-            return `
-              <div class="project-card detailed">
-                <h3 class="project-title">${projectName}</h3>
-                <div class="project-content">
-                  <h3>Summary</h3>
-                  <div class="content-text">
-                    Project details for ${projectName}
-                  </div>
-                </div>
-              </div>
-            `;
-          }
-
-          // Fetch data and create visualizations
-          fetch(API_URL + '/get_data')
-            .then(response => response.json())
-            .then(data => {
-              // Get unique projects and create project cards
-              const uniqueProjects = getUniqueProjects(data);
-              console.log('List of Unique Projects:', uniqueProjects);
-
-              const projectsGrid = document.getElementById('projects-grid');
-              uniqueProjects.forEach(project => {
-                projectsGrid.innerHTML += createProjectCard(project);
-              });
-
-              // Create network visualization
-              createNetworkVisualization(data);
-            })
-            .catch(error => {
-              console.error('Error loading data:', error);
-              document.getElementById('projects-grid').innerHTML = '<p>Error loading projects</p>';
-            });
-        });
-      </script>
-
       <!-- Slide 4: K-Partite Graph -->
       <section id="network-section">
-        <h3>Skills & Projects Network</h3>
-        <div id="network-container">
-          <div id="network"></div>
-          <div class="network-legend">
-            <div class="legend-item"><span class="legend-dot employee"></span>Employees</div>
-            <div class="legend-item"><span class="legend-dot project"></span>Projects</div>
+        <div class="container mx-auto p-4">
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold mb-2">Project Connections</h3>
+            <div id="network" class="border rounded-lg p-4" style="height: 400px;"></div>
+          </div>
+          
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold mb-2">AI/ML Skills Network</h3>
+            <div id="skills-network" class="border rounded-lg p-4" style="height: 400px;"></div>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold mb-2">Tools & Frameworks Network</h3>
+            <div id="tools-network" class="border rounded-lg p-4" style="height: 400px;"></div>
           </div>
         </div>
       </section>
 
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define API URL based on hostname
+      const API_URL = window.location.hostname.includes('localhost') 
+          ? 'http://localhost:5000'
+          : 'https://profile-backend-9kyx.onrender.com';
+
+      // Function to get unique values from comma-separated strings
+      function getUniqueProjects(data) {
+        const allProjects = data
+          .map(item => (item.Projects || '').split(','))
+          .flat()
+          .map(project => project.trim())
+          .filter(project => project !== '');
+        return [...new Set(allProjects)].sort();
+      }
+
+      // Function to create a project card
+      function createProjectCard(projectName) {
+        return `
+          <div class="project-card detailed">
+            <h3 class="project-title">${projectName}</h3>
+            <div class="project-content">
+              <h3>Summary</h3>
+              <div class="content-text">
+                Project details for ${projectName}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Fetch data and create visualizations
+      fetch(API_URL + '/get_data')
+        .then(response => response.json())
+        .then(data => {
+          // Get unique projects and create project cards
+          const uniqueProjects = getUniqueProjects(data);
+          console.log('List of Unique Projects:', uniqueProjects);
+
+          const projectsGrid = document.getElementById('projects-grid');
+          uniqueProjects.forEach(project => {
+            projectsGrid.innerHTML += createProjectCard(project);
+          });
+
+          // Create network visualization
+          createNetworkVisualization(data);
+        })
+        .catch(error => {
+          console.error('Error loading data:', error);
+          document.getElementById('projects-grid').innerHTML = '<p>Error loading projects</p>';
+        });
+    });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
   <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -162,28 +170,120 @@
       autoSlide: 0
     });
 
-    // Network options
-    const networkOptions = {
-      nodes: {
-        font: { 
-          size: 10,
-          color: '#f8fafc',
-          face: 'Inter'
-        },
-        borderWidth: 1,
-        shadow: true
+    // Common network options
+    const commonNetworkOptions = {
+      layout: {
+        hierarchical: {
+          enabled: true,
+          direction: 'UD',
+          sortMethod: 'directed',
+          nodeSpacing: 200,
+          levelSeparation: 1000
+        }
+      },
+      physics: {
+        enabled: false
       },
       edges: {
-        width: 1.5,
-        color: { color: '#2563eb', opacity: 0.6 },
+        width: 2,
         smooth: {
-          type: 'cubicBezier'
+          enabled: false
+        },
+        color: {
+          color: '#FFD6A5',
+          opacity: 0.7,
+          highlight: '#FF6600'
         }
       }
     };
 
-    // Update createNetworkVisualization to use the network options
+    // Options for each type of node
+    const nodeStyles = {
+      person: {
+        shape: 'circularImage',
+        image: 'https://img.icons8.com/color/96/000000/user-male-circle--v1.png',
+        size: 45,
+        font: {
+          size: 20,
+          color: '#FFFFFF',
+          face: 'Inter',
+          bold: true
+        },
+        color: {
+          background: '#4CAF50',
+          border: '#2E7D32',
+          highlight: {
+            background: '#81C784',
+            border: '#2E7D32'
+          }
+        }
+      },
+      skill: {
+        shape: 'box',
+        size: 60,
+        font: {
+          size: 24,
+          color: '#FFFFFF',
+          face: 'Inter',
+          bold: true
+        },
+        color: {
+          background: '#9333EA',  // Purple for skills
+          border: '#7E22CE',
+          highlight: {
+            background: '#A855F7',
+            border: '#7E22CE'
+          }
+        }
+      },
+      tool: {
+        shape: 'box',
+        size: 60,
+        font: {
+          size: 24,
+          color: '#FFFFFF',
+          face: 'Inter',
+          bold: true
+        },
+        color: {
+          background: '#EA580C',  // Orange for tools
+          border: '#C2410C',
+          highlight: {
+            background: '#F97316',
+            border: '#C2410C'
+          }
+        }
+      },
+      project: {
+        shape: 'box',
+        size: 60,
+        font: {
+          size: 24,
+          color: '#FFFFFF',
+          face: 'Inter',
+          bold: true
+        },
+        color: {
+          background: '#1E40AF',
+          border: '#1E3A8A',
+          highlight: {
+            background: '#3B82F6',
+            border: '#1E3A8A'
+          }
+        }
+      }
+    };
+
     function createNetworkVisualization(data) {
+      // Create Projects Network
+      createProjectNetwork(data);
+      // Create Skills Network
+      createSkillsNetwork(data);
+      // Create Tools Network
+      createToolsNetwork(data);
+    }
+
+    function createProjectNetwork(data) {
       const container = document.getElementById('network');
       if (!container) return;
 
@@ -198,9 +298,7 @@
         nodes.push({
           id: personId,
           label: person['Full Name'],
-          group: 'person',
-          shape: 'circularImage',
-          image: 'https://img.icons8.com/color/96/000000/user-male-circle--v1.png'
+          group: 'person'
         });
 
         // Add project nodes and edges
@@ -210,19 +308,163 @@
           if (!projectId) {
             projectId = nodeId++;
             nodeMap.set(project, projectId);
-            nodes.push({ id: projectId, label: project, group: 'project' });
+            nodes.push({ 
+              id: projectId, 
+              label: project, 
+              group: 'project'
+            });
           }
           edges.push({ from: personId, to: projectId });
         });
       });
 
-      // Create the network
       const networkData = {
         nodes: new vis.DataSet(nodes),
         edges: new vis.DataSet(edges)
       };
 
-      new vis.Network(container, networkData, networkOptions);
+      const options = {
+        ...commonNetworkOptions,
+        groups: {
+          person: nodeStyles.person,
+          project: nodeStyles.project
+        }
+      };
+
+      const network = new vis.Network(container, networkData, options);
+      setupClickHandler(network, networkData);
+    }
+
+    function createSkillsNetwork(data) {
+      const container = document.getElementById('skills-network');
+      if (!container) return;
+
+      let nodeId = 1;
+      const nodes = [];
+      const edges = [];
+      const nodeMap = new Map();
+
+      // Add person nodes
+      data.forEach(person => {
+        const personId = nodeId++;
+        nodes.push({
+          id: personId,
+          label: person['Full Name'],
+          group: 'person'
+        });
+
+        // Add AI/ML skills nodes and edges
+        const skills = (person['AI / ML Skills'] || '').split(',').map(s => s.trim()).filter(s => s);
+        skills.forEach(skill => {
+          let skillId = nodeMap.get(skill);
+          if (!skillId) {
+            skillId = nodeId++;
+            nodeMap.set(skill, skillId);
+            nodes.push({ 
+              id: skillId, 
+              label: skill, 
+              group: 'skill'
+            });
+          }
+          edges.push({ from: personId, to: skillId });
+        });
+      });
+
+      const networkData = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges)
+      };
+
+      const options = {
+        ...commonNetworkOptions,
+        groups: {
+          person: nodeStyles.person,
+          skill: nodeStyles.skill
+        }
+      };
+
+      const network = new vis.Network(container, networkData, options);
+      setupClickHandler(network, networkData);
+    }
+
+    function createToolsNetwork(data) {
+      const container = document.getElementById('tools-network');
+      if (!container) return;
+
+      let nodeId = 1;
+      const nodes = [];
+      const edges = [];
+      const nodeMap = new Map();
+
+      // Add person nodes
+      data.forEach(person => {
+        const personId = nodeId++;
+        nodes.push({
+          id: personId,
+          label: person['Full Name'],
+          group: 'person'
+        });
+
+        // Add tools nodes and edges
+        const tools = (person['Tools / Libraries / Frameworks'] || '').split(',').map(t => t.trim()).filter(t => t);
+        tools.forEach(tool => {
+          let toolId = nodeMap.get(tool);
+          if (!toolId) {
+            toolId = nodeId++;
+            nodeMap.set(tool, toolId);
+            nodes.push({ 
+              id: toolId, 
+              label: tool, 
+              group: 'tool'
+            });
+          }
+          edges.push({ from: personId, to: toolId });
+        });
+      });
+
+      const networkData = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges)
+      };
+
+      const options = {
+        ...commonNetworkOptions,
+        groups: {
+          person: nodeStyles.person,
+          tool: nodeStyles.tool
+        }
+      };
+
+      const network = new vis.Network(container, networkData, options);
+      setupClickHandler(network, networkData);
+    }
+
+    function setupClickHandler(network, networkData) {
+      network.on('click', function(params) {
+        // Reset all edges to default color
+        networkData.edges.forEach(edge => {
+          edge.color = {
+            color: '#FFD6A5',
+            opacity: 0.7
+          };
+          networkData.edges.update(edge);
+        });
+
+        if (params.nodes.length > 0) {
+          const nodeId = params.nodes[0];
+          const connectedEdges = network.getConnectedEdges(nodeId);
+          
+          // Highlight connected edges
+          connectedEdges.forEach(edgeId => {
+            const edge = networkData.edges.get(edgeId);
+            edge.color = {
+              color: '#FF6600',
+              opacity: 1
+            };
+            networkData.edges.update(edge);
+          });
+        }
+      });
     }
   </script>
 
