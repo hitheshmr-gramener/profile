@@ -27,7 +27,7 @@ CORS(app, resources={
     }
 })
 
-SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPxcIRHbPsXXTXNB8lR9CU1edyXTgyT3pTuj6pnhcqkeTMeByPBeufVZmFk7A_ynXeK6wnimziWVNP/pub?gid=1674504463&single=true&output=csv"
+SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQvtP1zOzk4aid5WL5OKFqsm0QIoX9qJbsDfh8oxzjBRQPapN48PHMS5dNapufx860WT6cg6rma2357/pub?gid=957463077&single=true&output=csv"
 
 @app.route('/')
 def index():
@@ -40,24 +40,46 @@ def serve_server_static(filename):
 @app.route('/get_data')
 def get_data():
     try:
-        response = requests.get(SHEET_URL, verify=False)
-        df = pd.read_csv(io.StringIO(response.text))
+        # Add headers to avoid potential blocking
+        headers = {
+            'User-Agent': 'Mozilla/5.0',
+            'Accept': 'text/csv'
+        }
+        response = requests.get(SHEET_URL, verify=False, headers=headers)
+        
+        if response.status_code != 200:
+            return jsonify({'error': f'Failed to fetch data: {response.status_code}'}), 500
+            
+        try:
+            df = pd.read_csv(io.StringIO(response.text), on_bad_lines='warn')
+        except Exception as parse_error:
+            return jsonify({'error': f'CSV parsing error: {str(parse_error)}\nResponse content: {response.text[:200]}...'}), 500
+            
         # Replace NaN values with None before converting to dict
         df = df.where(pd.notna(df), None)
+        
         # Ensure all required columns are present
         required_columns = ['Full Name', 'Designation', 'Highest Qualification', 
-                          'College / University Name', 'LinkedIn link', 'Projects']
+                          'College / University Name', 'LinkedIn link', 'Projects',]
         for col in required_columns:
             if col not in df.columns:
                 df[col] = None
+                
         data = df.to_dict('records')
         response = jsonify(data)
-        response.headers['Cache-Control'] = 'public, max-age=300'
-        response.headers['Content-Type'] = 'application/json'
-        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers.update({
+            'Cache-Control': 'public, max-age=300',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        })
         return response
+        
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({
+            'error': str(e),
+            'type': str(type(e).__name__),
+            'details': 'Please ensure the Google Sheet is published and accessible'
+        }), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
