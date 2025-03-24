@@ -1,9 +1,7 @@
 // Use an IIFE to avoid global scope pollution
 (function() {
   // API Configuration
-  const API_URL = window.location.hostname.includes('localhost') 
-      ? 'http://localhost:5000'
-      : 'https://profile-backend-9kyx.onrender.com';
+  const API_URL = 'http://localhost:5000'
 
   console.log('Current hostname:', window.location.hostname); 
   console.log('Using API URL:', API_URL); 
@@ -103,6 +101,9 @@
         throw new Error('No data received from Google Sheet');
       }
 
+      // Create networks
+      createNetworkVisualization(data);
+
       // Update skills section
       const skillsSection = document.getElementById('skills-section');
       const skillsLoadingDiv = skillsSection.querySelector('.loading');
@@ -122,26 +123,16 @@
       aimlContent.innerHTML = uniqueAIML.map(skill => `<div class="skill-tag">${skill}</div>`).join('');
 
       // Hide loading message
-      skillsLoadingDiv.style.display = 'none';
-
+        skillsLoadingDiv.style.display = 'none';
+      
       displayProfiles(data);
       createNetworkGraph(data);
     })
     .catch(error => {
       console.error('Error:', error);
-      const sections = [
-        document.getElementById('profile-section'),
-        document.getElementById('skills-section')
-      ];
-      
-      sections.forEach(section => {
-        if (section) {
-          const loadingDiv = section.querySelector('.loading');
-          if (loadingDiv) {
-            loadingDiv.textContent = `Error loading data: ${error.message}`;
-            loadingDiv.style.color = 'red';
-          }
-        }
-      });
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'error-message';
+      errorDiv.textContent = 'Error loading data. Please try again later.';
+      document.body.appendChild(errorDiv);
     });
 })();
