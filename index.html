@@ -152,7 +152,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Define API URL based on hostname
-      const API_URL ='http://localhost:5000'
+      const API_URL = window.location.hostname.includes('localhost') 
+       ? 'http://localhost:5000'
+       : 'https://profile-backend-9kyx.onrender.com';
 
       // Function to get unique values from comma-separated strings
       function getUniqueProjects(data) {

@@ -1,7 +1,9 @@
 // Use an IIFE to avoid global scope pollution
 (function() {
   // API Configuration
-  const API_URL = 'http://localhost:5000'
+  const API_URL = window.location.hostname.includes('localhost') 
+       ? 'http://localhost:5000'
+       : 'https://profile-backend-9kyx.onrender.com';
 
   console.log('Current hostname:', window.location.hostname); 
   console.log('Using API URL:', API_URL); 
