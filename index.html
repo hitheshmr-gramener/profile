@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Portfolios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css" id="theme">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -18,7 +19,11 @@
 
       <!-- Slide 1: Profile -->
       <section id="profile-section">
+        <div class="section-header">
+
+          <img src="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg" alt="Straive Logo">
         <h3>Portfolios</h3>
+        </div>
         <div class="loading">Loading profiles...</div>
         <div class="profile-grid">
           <!-- Profile cards will be inserted here by JavaScript -->
@@ -27,7 +32,11 @@
 
       <!-- Slide 2: Skills -->
       <section id="skills-section">
-        <h3>Technical Expertise</h3>
+        <div class="section-header">
+
+          <img src="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg" alt="Straive Logo">
+          <h3>Technical Expertise</h3>
+        </div>
         <div class="loading">Loading skills...</div>        
         <div class="tools-frameworks-block">
           <div class="category-header">
@@ -41,7 +50,10 @@
           <div class="column">
             <div class="category-header">
               <i class="fas fa-code category-icon"></i>
-              <h3>Programming Languages</h3>
+             
+                
+                <h3>Programming Languages</h3>
+              
             </div>
             <div id="languages-content" class="skill-content"></div>
           </div>
@@ -57,13 +69,37 @@
 
       <!-- Slide 3: Projects -->
       <section id="projects-section">
+        <div class="section-header">
+
+          <img src="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg" alt="Straive Logo">
         <h3>Projects</h3>
+        </div>
         <div id="projects-grid" class="projects-grid">
           <!-- Project cards will be dynamically inserted here -->
         </div>
+        
+        <!-- Modal Backdrop -->
+        <div id="modal-backdrop" class="modal-backdrop"></div>
+        
+        <!-- Project Modal -->
+        <div id="project-modal" class="project-modal">
+          <div class="modal-content">
+            
+              <h2 id="modal-title"></h2>
+            
+            <span class="modal-close">&times;</span>
+            <div id="modal-project-content">
+              <!-- Project details will be dynamically inserted here -->
+            </div>
+            <div class="modal-network-container">
+              <h3>Project Connections</h3>
+              <div id="modal-network" class="modal-network" style="height: 70vh; min-height: 500px;"></div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- Slide 4: Project Connections Network -->
+      <!-- Slide 4: Project Connections Network
       <section id="project-network-section">
         <div class="container mx-auto">
           <div class="network-container">
@@ -71,13 +107,16 @@
             <div id="network" class="border rounded-lg p-1" style="height: 600px;"></div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <!-- Slide 5: AI/ML Skills Network -->
       <section id="skills-network-section">
         <div class="container mx-auto">
           <div class="network-container">
-            <h3 class="text-2xl font-bold mb-0">AI/ML Skills Network</h3>
+            <div class="section-header">
+              <img src="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg" alt="Straive Logo">
+              <h3 class="text-2xl font-bold mb-0">AI/ML Skills Network</h3>
+            </div>
             <div id="skills-network" class="border rounded-lg p-1" style="height: 600px;"></div>
           </div>
         </div>
@@ -87,9 +126,23 @@
       <section id="tools-network-section">
         <div class="container mx-auto">
           <div class="network-container">
-            <h3 class="text-2xl font-bold mb-0">Tools & Frameworks Network</h3>
+            <div class="section-header">
+              <img src="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg" alt="Straive Logo">
+              <h3 class="text-2xl font-bold mb-0">Tools & Frameworks Network</h3>
+            </div>
             <div id="tools-network" class="border rounded-lg p-1" style="height: 600px;"></div>
           </div>
+        </div>
+      </section>
+      <!-- slide 7 -->
+
+      <!-- Slide 7: Thank You -->
+      <section id="thank-you-section" class="thank-you-section" style="background-image: url('./IMG_1074.jpg');">
+        <div class="thank-you-content">
+          
+            <img class="image-straive" src="./images-Photoroom.png" alt="Thank You">
+          
+          <p>Connecting the dots</p>
         </div>
       </section>
 
@@ -99,50 +152,575 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Define API URL based on hostname
-      const API_URL = window.location.hostname.includes('localhost') 
-          ? 'http://localhost:5000'
-          : 'https://profile-backend-9kyx.onrender.com';
+      const API_URL ='http://localhost:5000'
 
       // Function to get unique values from comma-separated strings
       function getUniqueProjects(data) {
-        const allProjects = data
-          .map(item => (item.Projects || '').split(','))
-          .flat()
-          .map(project => project.trim())
-          .filter(project => project !== '');
-        return [...new Set(allProjects)].sort();
+        const projectSet = new Set();
+        data.forEach(person => {
+          const projects = (person.Projects || '').split(',').map(p => p.trim()).filter(p => p);
+          projects.forEach(project => {
+            // For Xperi-related projects, only add 'Xperi' as the main project
+            if (project.startsWith('Xperi')) {
+              projectSet.add('Xperi');
+            } else {
+              projectSet.add(project);
+            }
+          });
+        });
+        return Array.from(projectSet).sort();
       }
 
-      // Function to create a project card
+      // Load project data from JSON file
+      let projectsData = {};
+      
+      // Function to find project data by name
+      function findProjectData(projectName) {
+        if (!projectsData.projects) return null;
+        
+        // Try exact match first
+        let match = projectsData.projects.find(project =>
+          project.name.toLowerCase() === projectName.toLowerCase()
+        );
+        
+        // If no exact match, try partial match
+        if (!match) {
+          match = projectsData.projects.find(project =>
+            projectName.toLowerCase().includes(project.name.toLowerCase()) ||
+            project.name.toLowerCase().includes(projectName.toLowerCase())
+          );
+        }
+        
+        return match;
+      }
+
+      // Function to create a project card (gallery style)
       function createProjectCard(projectName) {
+        // Find project data from our JSON
+        const projectData = findProjectData(projectName);
+        
+        // Default values if project data is not found
+        const technologies = projectData ? projectData.technologies : [];
+        
+        // Show only the first technology as a preview (if available)
+        const techPreview = technologies.length > 0 ?
+          `<div class="tech-preview"><span class="skill-tag">${technologies[0]}</span>${technologies.length > 1 ? ` <span class="skill-tag">+${technologies.length - 1}</span>` : ''}</div>` : '';
+        
         return `
-          <div class="project-card detailed">
+          <div class="project-card" data-project="${projectName}">
             <h3 class="project-title">${projectName}</h3>
-            <div class="project-content">
-              <h3>Summary</h3>
-              <div class="content-text">
-                Project details for ${projectName}
+            ${techPreview}
+          </div>
+        `;
+      }
+      
+      // Function to create detailed project content for the modal
+      function createProjectDetail(projectName) {
+        const project = findProjectData(projectName);
+        if (!project) return '<p>Project details not found.</p>';
+        
+        const { summary, link, technologies } = project;
+        const techTags = technologies
+          .map(tech => `<span class="skill-tag">${tech}</span>`)
+          .join('');
+        
+        const summaryContent = typeof summary === 'object' ? `
+          <div class="content-text">
+            ${summary.overview}
+          </div>
+          <div class="components-section">
+            ${summary.components.map(comp => `
+              <div class="component-item">
+                <h4>
+                  <a href="${comp.link}" target="_blank" rel="noopener noreferrer" class="component-link">
+                    ${comp.name}
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                </h4>
+                <p class="component-description">${comp.description}</p>
+              </div>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="content-text">
+            ${summary}
+          </div>
+        `;
+
+        return `
+          <div class="project-content">
+            <h2 class="project-title">${projectName}</h2>
+            
+            <div class="section-header">
+              <i class="fas fa-info-circle" style="color: var(--primary-color);"></i>
+              <h3>Description</h3>
+            </div>
+            ${summaryContent}
+            
+            ${link ? `
+            <div class="section-header">
+              <i class="fas fa-link" style="color: var(--primary-color);"></i>
+              <h3>Link</h3>
+            </div>
+            <div class="content-text">
+              <a href="${link}" target="_blank">${link}</a>
+            </div>
+            ` : ''}
+            
+            ${technologies.length > 0 ? `
+            <div class="section-header">
+              <i class="fas fa-code" style="color: var(--primary-color);"></i>
+              <h3>Technologies</h3>
+            </div>
+            <div class="content-text">
+              <div class="skill-content">
+                ${techTags}
               </div>
             </div>
+            ` : ''}
           </div>
         `;
       }
 
-      // Fetch data and create visualizations
-      fetch(API_URL + '/get_data')
-        .then(response => response.json())
-        .then(data => {
+      // Function to create modal network visualization
+      function createModalNetwork(projectName, data) {
+        const container = document.getElementById('modal-network');
+        if (!container) return;
+
+        let nodeId = 1;
+        const nodes = [];
+        const edges = [];
+        const nodeMap = new Map();
+        const teamMembers = new Map(); // Store team members for click handling
+
+        // Add the project node first
+        const projectId = nodeId++;
+        nodes.push({
+          id: projectId,
+          label: projectName,
+          group: 'project',
+          level: 0
+        });
+        nodeMap.set(projectName, projectId);
+
+        // Handle Xperi projects
+        if (projectName === 'Xperi') {
+          // Create a map to group people by their teams
+          const teamMap = new Map();
+          
+          data.forEach(person => {
+            const projects = (person.Projects || '').split(',').map(p => p.trim()).filter(p => p);
+            projects.forEach(project => {
+              if (project.startsWith('Xperi')) {
+                let teamName;
+                if (project === 'Xperi') {
+                  teamName = 'General';
+                } else {
+                  const match = project.match(/Xperi[\s-]*(?:\{(.+?)\}|(.+))/);
+                  teamName = match ? (match[1] || match[2]).trim() : 'General';
+                }
+                
+                if (!teamMap.has(teamName)) {
+                  teamMap.set(teamName, []);
+                }
+                teamMap.get(teamName).push(person);
+              }
+            });
+          });
+
+          // Sort teams by name
+          const sortedTeams = Array.from(teamMap.entries()).sort((a, b) => {
+            if (a[0] === 'General') return -1;
+            if (b[0] === 'General') return 1;
+            return a[0].localeCompare(b[0]);
+          });
+
+          // Create team nodes and connect people
+          sortedTeams.forEach(([teamName, members]) => {
+            const teamId = nodeId++;
+            const hasMultipleMembers = members.length > 0;
+            
+            // Create team node
+            nodes.push({
+              id: teamId,
+              label: teamName + (hasMultipleMembers ? `\n(${members.length})` : ''),
+              group: 'team',
+              level: 1,
+              title: `${teamName}\n${members.length} member${members.length > 1 ? 's' : ''}\n${hasMultipleMembers ? 'Click to show/hide members' : ''}`,
+              expandable: hasMultipleMembers
+            });
+            edges.push({
+              from: teamId,
+              to: projectId,
+              smooth: { type: 'continuous' }
+            });
+
+            // Store team members for later use
+            teamMembers.set(teamId, []);
+
+            // Sort members by name
+            members.sort((a, b) => a['Full Name'].localeCompare(b['Full Name']));
+
+            // Add team members (initially hidden)
+            members.forEach(person => {
+              const personId = nodeId++;
+              const wrappedName = person['Full Name'].length > 5 ? 
+                person['Full Name'].split(' ').reduce((acc, word) => {
+                  if (acc[acc.length - 1].length + word.length > 15) {
+                    acc.push(word);
+                  } else {
+                    acc[acc.length - 1] += ' ' + word;
+                  }
+                  return acc;
+                }, ['']).join('\n') : person['Full Name'];
+
+              // Store member data
+              teamMembers.get(teamId).push({
+                id: personId,
+                name: wrappedName,
+                designation: person['Designation'] || ''
+              });
+
+              // Create hidden member node
+              nodes.push({
+                id: personId,
+                label: wrappedName,
+                group: 'person',
+                level: 2,
+                title: `${person['Full Name']}\n${person['Designation'] || ''}`,
+                hidden: true
+              });
+
+              // Create hidden edge
+              edges.push({
+                id: `edge-${teamId}-${personId}`,
+                from: personId,
+                to: teamId,
+                smooth: { type: 'continuous' },
+                hidden: true
+              });
+            });
+          });
+        } else {
+          // Regular project handling
+          data.forEach(person => {
+            const projects = (person.Projects || '').split(',').map(p => p.trim()).filter(p => p);
+            if (projects.includes(projectName)) {
+              const personId = nodeId++;
+              const wrappedName = person['Full Name'].length > 10 ? 
+                person['Full Name'].split(' ').reduce((acc, word) => {
+                  if (acc[acc.length - 1].length + word.length > 15) {
+                    acc.push(word);
+                  } else {
+                    acc[acc.length - 1] += ' ' + word;
+                  }
+                  return acc;
+                }, ['']).join('\n') : person['Full Name'];
+
+              nodes.push({
+                id: personId,
+                label: wrappedName,
+                group: 'person',
+                level: 1,
+                title: `${person['Full Name']}\n${person['Designation'] || ''}`
+              });
+              edges.push({
+                from: personId,
+                to: projectId,
+                smooth: { type: 'continuous' }
+              });
+            }
+          });
+        }
+
+        const networkData = {
+          nodes: new vis.DataSet(nodes),
+          edges: new vis.DataSet(edges)
+        };
+
+        const options = {
+          layout: {
+            hierarchical: {
+              enabled: true,
+              direction: 'UD',
+              sortMethod: 'directed',
+              nodeSpacing: 100,
+              levelSeparation: 150,
+              treeSpacing: 150
+            }
+          },
+          physics: {
+            enabled: false
+          },
+          nodes: {
+            shape: 'dot',
+            size: 40,
+            font: {
+              size: 18,
+              color: '#ffffff',
+              face: 'Inter, system-ui, sans-serif',
+              multi: true,
+              bold: true,
+              background: 'rgba(0,0,0,0.8)',
+              strokeWidth: 0
+            },
+            borderWidth: 3,
+            shadow: {
+              enabled: true,
+              color: 'rgba(0,0,0,0.5)',
+              size: 10
+            }
+          },
+          groups: {
+            person: {
+              color: {
+                background: '#3B82F6',
+                border: '#1D4ED8'
+              }
+            },
+            team: {
+              color: {
+                background: '#8B5CF6',
+                border: '#6D28D9'
+              },
+              size: 25
+            },
+            project: {
+              color: {
+                background: '#1E40AF',
+                border: '#1E3A8A'
+              },
+              size: 30
+            }
+          },
+          edges: {
+            width: 3,
+            color: {
+              color: 'rgba(255,255,255,0.3)',
+              highlight: 'rgba(255,255,255,0.6)',
+              hover: 'rgba(255,255,255,0.4)'
+            },
+            smooth: {
+              type: 'continuous',
+              roundness: 0.2
+            }
+          },
+          interaction: {
+            hover: true,
+            tooltipDelay: 200,
+            hideEdgesOnDrag: true,
+            multiselect: false,
+            navigationButtons: true,
+            zoomView: true,
+            keyboard: true,
+            dragNodes: false
+          }
+        };
+
+        const network = new vis.Network(container, networkData, options);
+        
+        // Track expanded state of teams
+        const expandedTeams = new Set();
+        
+        // Handle node clicks for expandable teams
+        network.on('click', function(params) {
+          if (params.nodes.length === 0) return;
+          
+          const clickedId = params.nodes[0];
+          const clickedNode = networkData.nodes.get(clickedId);
+          
+          if (clickedNode && clickedNode.expandable) {
+            const isExpanded = expandedTeams.has(clickedId);
+            
+            if (teamMembers.has(clickedId)) {
+              // Clicking on a team node
+              const members = teamMembers.get(clickedId);
+              members.forEach(member => {
+                // Toggle visibility of member node
+                networkData.nodes.update({
+                  id: member.id,
+                  hidden: isExpanded
+                });
+                
+                // Toggle visibility of edge
+                networkData.edges.update({
+                  id: `edge-${clickedId}-${member.id}`,
+                  hidden: isExpanded
+                });
+              });
+              
+              // Update expanded state
+              if (isExpanded) {
+                expandedTeams.delete(clickedId);
+              } else {
+                expandedTeams.add(clickedId);
+              }
+              
+              // Update layout with animation
+              setTimeout(() => {
+                network.fit({
+                  animation: {
+                    duration: 500,
+                    easingFunction: 'easeInOutQuad'
+                  }
+                });
+              }, 50);
+            }
+          }
+        });
+
+        // Initial fit to container
+        setTimeout(() => {
+          network.fit({
+            animation: {
+              duration: 500,
+              easingFunction: 'easeInOutQuad'
+            }
+          });
+          network.moveTo({
+            scale: 1.0
+          });
+        }, 100);
+      }
+
+      // Function to open the modal with project details
+      function openProjectModal(projectName) {
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-project-content');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        
+        // Set the modal content
+        modalContent.innerHTML = createProjectDetail(projectName);
+        
+        // Display modal and backdrop
+        modal.style.display = 'flex';
+        modalBackdrop.style.display = 'block';
+        
+        // Create the network visualization
+        fetch(API_URL + '/get_data')
+          .then(response => response.json())
+          .then(data => {
+            createModalNetwork(projectName, data);
+          })
+          .catch(error => {
+            console.error('Error loading network data:', error);
+            document.querySelector('.modal-network').innerHTML = '<p>Error loading network visualization</p>';
+          });
+        
+        // Add scroll event listener with throttling
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              updateModalPosition();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+        
+        // Initial position update (after a brief delay to allow content to render)
+        setTimeout(updateModalPosition, 0);
+        
+        // Make modal and backdrop visible with animation
+        requestAnimationFrame(() => {
+          modal.classList.add('active');
+          modalBackdrop.classList.add('active');
+        });
+        
+        // Prevent scrolling on the body
+        document.body.style.overflow = 'hidden';
+      }
+      
+      function closeProjectModal() {
+        const modal = document.getElementById('project-modal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        
+        // Remove scroll event listener
+        window.removeEventListener('scroll', updateModalPosition);
+        
+        // Remove active class first (for animation)
+        modal.classList.remove('active');
+        modalBackdrop.classList.remove('active');
+        
+        // Re-enable scrolling
+        document.body.style.overflow = '';
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modalBackdrop.style.display = 'none';
+        }, 300);
+      }
+
+      function updateModalPosition() {
+        const modal = document.getElementById('project-modal');
+        const modalContent = modal.querySelector('.modal-content');
+        const scrollTop = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const modalHeight = modalContent.offsetHeight;
+        
+        // Calculate center position relative to current scroll
+        const centerY = scrollTop + (viewportHeight / 2);
+        const topPosition = centerY - (modalHeight / 2);
+        
+        // Apply the position with transform, ensuring smooth animation
+        requestAnimationFrame(() => {
+          modalContent.style.top = `${topPosition}px`;
+          modalContent.style.transition = 'top 0.2s ease-out';
+        });
+      }
+
+      // Fetch project data from JSON file and API data
+      Promise.all([
+        fetch('project-data.json').then(response => response.json()),
+        fetch(API_URL + '/get_data').then(response => response.json())
+      ])
+        .then(([projectJson, apiData]) => {
+          // Store projects data globally
+          projectsData = projectJson;
+          
           // Get unique projects and create project cards
-          const uniqueProjects = getUniqueProjects(data);
+          const uniqueProjects = getUniqueProjects(apiData);
           console.log('List of Unique Projects:', uniqueProjects);
 
           const projectsGrid = document.getElementById('projects-grid');
+          projectsGrid.innerHTML = ''; // Clear existing content
+          
           uniqueProjects.forEach(project => {
             projectsGrid.innerHTML += createProjectCard(project);
           });
+          
+          // Set up event listeners for project cards
+          document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', function() {
+              const projectName = this.getAttribute('data-project');
+              openProjectModal(projectName);
+              window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+          });
+          
+          // Set up event listener for modal close button
+          document.querySelector('.modal-close').addEventListener('click', closeProjectModal);
+          
+          // Close modal when clicking outside the content
+          document.getElementById('project-modal').addEventListener('click', function(event) {
+            if (event.target === this) {
+              closeProjectModal();
+            }
+            // Prevent the click from propagating to elements underneath
+            event.stopPropagation();
+          });
+          
+          // Close modal with Escape key
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && document.getElementById('project-modal').style.display === 'flex') {
+              closeProjectModal();
+            }
+          });
 
           // Create network visualization
-          createNetworkVisualization(data);
+          createNetworkVisualization(apiData);
         })
         .catch(error => {
           console.error('Error loading data:', error);
@@ -180,24 +758,97 @@
       autoSlide: 0
     });
 
-    // Common network options
+    // Options specifically for skills network
+    const skillsNetworkOptions = {
+      layout: {
+        hierarchical: {
+          enabled: true,
+          direction: 'UD',
+          sortMethod: 'directed',
+          nodeSpacing: 100,
+          levelSeparation: 1600,  // Increased from 400 to 800 for more parent-child distance
+          treeSpacing: 300
+        }
+      },
+      physics: {
+        enabled: true,
+        hierarchicalRepulsion: {
+          nodeDistance: 200,
+          springLength: 200
+        },
+        stabilization: {
+          iterations: 1000
+        }
+      },
+      edges: {
+        width: 7,
+        smooth: {
+          enabled: true,
+          type: 'cubicBezier'
+        },
+        color: {
+          color: '#FFD6A5',
+          opacity: 0.7,
+          highlight: '#FF6600'
+        }
+      }
+    };
+
+    // Common network options for other networks
     const commonNetworkOptions = {
       layout: {
         hierarchical: {
           enabled: true,
           direction: 'UD',
           sortMethod: 'directed',
-          nodeSpacing: 200,
-          levelSeparation: 1000
+          nodeSpacing: 50,
+          levelSeparation: 80,
+          treeSpacing: 80
         }
       },
       physics: {
         enabled: false
       },
       edges: {
-        width: 2,
+        width: 3,
         smooth: {
           enabled: false
+        },
+        color: {
+          color: '#FFD6A5',
+          opacity: 0.7,
+          highlight: '#FF6600'
+        }
+      }
+    };
+
+    // Options specifically for tools network
+    const toolsNetworkOptions = {
+      layout: {
+        hierarchical: {
+          enabled: true,
+          direction: 'UD',
+          sortMethod: 'directed',
+          nodeSpacing: 200,
+          levelSeparation: 1600,  // Increased from 400 to 800 for more parent-child distance
+          treeSpacing: 300
+        }
+      },
+      physics: {
+        enabled: true,
+        hierarchicalRepulsion: {
+          nodeDistance: 400,
+          springLength: 200
+        },
+        stabilization: {
+          iterations: 1000
+        }
+      },
+      edges: {
+        width: 7,
+        smooth: {
+          enabled: true,
+          type: 'cubicBezier'
         },
         color: {
           color: '#FFD6A5',
@@ -284,6 +935,19 @@
       }
     };
 
+    // Helper function for text wrapping
+    function wrapText(text, maxLength = 5) {
+      if (!text || text.length <= maxLength) return text;
+      return text.split(' ').reduce((acc, word) => {
+        if (acc[acc.length - 1].length + word.length > maxLength) {
+          acc.push(word);
+        } else {
+          acc[acc.length - 1] += ' ' + word;
+        }
+        return acc;
+      }, ['']).join('\n');
+    }
+
     function createNetworkVisualization(data) {
       // Create Projects Network
       createProjectNetwork(data);
@@ -335,9 +999,51 @@
 
       const options = {
         ...commonNetworkOptions,
+        nodes: {
+          shape: 'dot',
+          size: 40,
+          font: {
+            size: 18,
+            color: '#000000',
+            face: 'Inter, system-ui, sans-serif',
+            multi: true,
+            bold: true,
+            background: 'rgba(0,0,0,0.8)',
+            strokeWidth: 0
+          },
+          borderWidth: 3,
+          borderColor: '#000000',
+          shadow: {
+            enabled: true,
+            color: 'rgba(0,0,0,0.5)',
+            size: 10
+          }
+        },
         groups: {
           person: nodeStyles.person,
           project: nodeStyles.project
+        },
+        edges: {
+          width: 3,
+          color: {
+            color: 'rgba(255,255,255,0.3)',
+            highlight: 'rgba(255,255,255,0.6)',
+            hover: 'rgba(255,255,255,0.4)'
+          },
+          smooth: {
+            type: 'continuous',
+            roundness: 0.2
+          }
+        },
+        interaction: {
+          hover: true,
+          tooltipDelay: 200,
+          hideEdgesOnDrag: true,
+          multiselect: false,
+          navigationButtons: true,
+          zoomView: true,
+          keyboard: true,
+          dragNodes: false
         }
       };
 
@@ -349,34 +1055,147 @@
       const container = document.getElementById('skills-network');
       if (!container) return;
 
+      console.log('Creating skills network with data:', data);
+
       let nodeId = 1;
       const nodes = [];
       const edges = [];
-      const nodeMap = new Map();
+      const skillMembers = new Map();
 
-      // Add person nodes
+      // Add root technology node
+      const techId = nodeId++;
+      nodes.push({
+        id: techId,
+        label: wrapText('AI/ML Technologies'),
+        group: 'technology',
+        level: 0,
+        size: 400,
+        font: { size: 100 }
+      });
+
+      // Get all unique AI/ML skills from the data
+      const allSkills = new Set();
       data.forEach(person => {
-        const personId = nodeId++;
+        const skills = (person['AI / ML Skills'] || '').split(',')
+          .map(s => s.trim())
+          .filter(s => s && s !== 'null' && s !== 'undefined');
+        skills.forEach(skill => allSkills.add(skill));
+      });
+
+      console.log('All unique skills:', Array.from(allSkills));
+
+      // Categorize skills
+      const skillCategories = {
+        'Machine Learning': ['regression', 'classification', 'clustering', 'machine learning', 'ml', 'supervised', 'unsupervised', 'random forest', 'svm', 'xgboost', 'decision tree', 'ensemble'],
+        'Deep Learning': ['deep learning', 'neural network', 'cnn', 'rnn', 'lstm', 'transformer', 'gan', 'autoencoder', 'bert', 'gpt'],
+        'NLP': ['nlp', 'natural language', 'text mining', 'sentiment', 'tokenization', 'word embedding', 'text classification', 'named entity'],
+        'Computer Vision': ['computer vision', 'cv', 'image processing', 'object detection', 'face recognition', 'yolo', 'opencv', 'segmentation'],
+        'Data Science': ['data science', 'statistics', 'data analysis', 'feature engineering', 'data mining', 'eda', 'visualization', 'pandas', 'numpy'],
+        'MLOps': ['mlops', 'deployment', 'monitoring', 'pipeline', 'ci/cd', 'docker', 'kubernetes', 'aws', 'azure', 'cloud']
+      };
+
+      // Helper function to categorize a skill
+      function categorizeSkill(skill) {
+        const lowerSkill = skill.toLowerCase();
+        for (const [category, keywords] of Object.entries(skillCategories)) {
+          if (keywords.some(keyword => lowerSkill.includes(keyword))) {
+            return category;
+          }
+        }
+        return 'Other AI/ML Skills';
+      }
+
+      // Group skills by category
+      const categorizedSkills = {};
+      allSkills.forEach(skill => {
+        const category = categorizeSkill(skill);
+        if (!categorizedSkills[category]) {
+          categorizedSkills[category] = new Set();
+        }
+        categorizedSkills[category].add(skill);
+      });
+
+      console.log('Categorized skills:', categorizedSkills);
+
+      // Create category nodes and collect skills
+      Object.entries(categorizedSkills).forEach(([category, skillSet]) => {
+        const categoryId = nodeId++;
+        const skills = Array.from(skillSet);
+        
         nodes.push({
-          id: personId,
-          label: person['Full Name'],
-          group: 'person'
+          id: categoryId,
+          label: wrapText(`${category}\n(${skills.length})`),
+          group: 'category',
+          level: 1,
+          size: 200,
+          font: { size: 100 }
         });
 
-        // Add AI/ML skills nodes and edges
-        const skills = (person['AI / ML Skills'] || '').split(',').map(s => s.trim()).filter(s => s);
+        edges.push({
+          from: categoryId,
+          to: techId,
+          width: 3,
+          smooth: { type: 'vertical' }
+        });
+
+        skillMembers.set(categoryId, []);
+
         skills.forEach(skill => {
-          let skillId = nodeMap.get(skill);
-          if (!skillId) {
-            skillId = nodeId++;
-            nodeMap.set(skill, skillId);
-            nodes.push({ 
-              id: skillId, 
-              label: skill, 
-              group: 'skill'
+          const skillId = nodeId++;
+          const peopleWithSkill = data.filter(person => {
+            const personSkills = (person['AI / ML Skills'] || '').split(',')
+              .map(s => s.trim())
+              .filter(s => s && s !== 'null' && s !== 'undefined');
+            return personSkills.includes(skill);
+          });
+
+          if (peopleWithSkill.length > 0) {
+            nodes.push({
+              id: skillId,
+              label: wrapText(`${skill}\n(${peopleWithSkill.length})`),
+              group: 'skill',
+              level: 2,
+              size: 80,
+              font: { size: 60 },
+              clickable: true,
+              title: `Click to see ${peopleWithSkill.length} people with this skill`
+            });
+
+            edges.push({
+              from: skillId,
+              to: categoryId,
+              width: 2,
+              smooth: { type: 'horizontal' }
+            });
+
+            skillMembers.get(categoryId).push({
+              id: skillId,
+              name: skill,
+              people: peopleWithSkill
+            });
+
+            peopleWithSkill.forEach(person => {
+              const personId = nodeId++;
+              nodes.push({
+                id: personId,
+                label: wrapText(person['Full Name']),
+                group: 'person',
+                level: 3,
+                size: 60,
+                font: { size: 60},
+                hidden: true,
+                title: `${person['Full Name']}\n${person['Designation'] || ''}`
+              });
+
+              edges.push({
+                from: personId,
+                to: skillId,
+                width: 4,
+                hidden: true,
+                smooth: { type: 'horizontal' }
+              });
             });
           }
-          edges.push({ from: personId, to: skillId });
         });
       });
 
@@ -386,49 +1205,279 @@
       };
 
       const options = {
-        ...commonNetworkOptions,
+        ...skillsNetworkOptions,
+        nodes: {
+          shape: 'dot',
+          font: {
+            color: '#ffffff',
+            face: 'Inter, system-ui, sans-serif',
+            background: 'rgba(0,0,0,0.7)'
+          },
+          borderWidth: 2,
+          shadow: true
+        },
         groups: {
-          person: nodeStyles.person,
-          skill: nodeStyles.skill
+          technology: {
+            color: {
+              background: '#ff7675',
+              border: '#ff5f5f',
+              highlight: { background: '#ff8f8f', border: '#ff7675' }
+            },
+            shape: 'hexagon'
+          },
+          category: {
+            color: {
+              background: '#74b9ff',
+              border: '#5fa8f5',
+              highlight: { background: '#8fc5ff', border: '#74b9ff' }
+            },
+            shape: 'dot'
+          },
+          skill: {
+            color: {
+              background: '#a8e6cf',
+              border: '#88d4b0',
+              highlight: { background: '#baecd8', border: '#a8e6cf' }
+            },
+            shape: 'dot'
+          },
+          person: {
+            color: {
+              background: '#ffd3b6',
+              border: '#ffb088',
+              highlight: { background: '#ffdfc9', border: '#ffd3b6' }
+            },
+            shape: 'dot'
+          }
+        },
+        edges: {
+          color: {
+            color: 'rgba(255,255,255,0.3)',
+            highlight: 'rgba(255,255,255,0.6)',
+            hover: 'rgba(255,255,255,0.4)'
+          },
+          smooth: {
+            enabled: true,
+            type: 'cubicBezier',
+            roundness: 0.5
+          }
+        },
+        interaction: {
+          hover: true,
+          tooltipDelay: 200,
+          hideEdgesOnDrag: true,
+          multiselect: false,
+          dragNodes: false,
+          zoomView: true
         }
       };
 
       const network = new vis.Network(container, networkData, options);
-      setupClickHandler(network, networkData);
+
+      // Track shown person nodes
+      const shownPersonNodes = new Set();
+
+      // Handle node clicks
+      network.on('click', function(params) {
+        if (params.nodes.length === 0) return;
+        
+        const clickedId = params.nodes[0];
+        const clickedNode = networkData.nodes.get(clickedId);
+        
+        if (clickedNode && clickedNode.clickable) {
+          // Find connected person nodes
+          const edges = networkData.edges.get().filter(edge => edge.to === clickedId);
+          const personNodes = edges.map(edge => edge.from);
+          
+          const isShowing = shownPersonNodes.has(clickedId);
+          
+          // Toggle person nodes with horizontal positioning
+          personNodes.forEach((personId, index) => {
+            const personNode = networkData.nodes.get(personId);
+            networkData.nodes.update({
+              id: personId,
+              hidden: isShowing,
+              x: isShowing ? undefined : clickedNode.x + 200,  
+              y: isShowing ? undefined : clickedNode.y + (index - (personNodes.length - 1) / 2) * 50  
+            });
+            networkData.edges.update({
+              from: personId,
+              to: clickedId,
+              hidden: isShowing
+            });
+          });
+
+          // Update tracking
+          if (isShowing) {
+            shownPersonNodes.delete(clickedId);
+          } else {
+            shownPersonNodes.add(clickedId);
+          }
+
+          // Fit view with animation
+          setTimeout(() => {
+            network.fit({
+              animation: {
+                duration: 500,
+                easingFunction: 'easeInOutQuad'
+              }
+            });
+          }, 50);
+        }
+      });
+
+      // Initial fit
+      network.once('afterDrawing', function() {
+        network.fit({
+          animation: {
+            duration: 1000,
+            easingFunction: 'easeInOutQuad'
+          }
+        });
+      });
     }
 
     function createToolsNetwork(data) {
       const container = document.getElementById('tools-network');
       if (!container) return;
 
+      console.log('Creating tools network with data:', data);
+
       let nodeId = 1;
       const nodes = [];
       const edges = [];
-      const nodeMap = new Map();
+      const toolMembers = new Map();
 
-      // Add person nodes
+      // Add root technology node
+      const techId = nodeId++;
+      nodes.push({
+        id: techId,
+        label: wrapText('Tools & Frameworks'),
+        group: 'technology',
+        level: 0,
+        size: 1000,
+        font: { size: 300 }
+      });
+
+      // Get all unique tools from the data
+      const allTools = new Set();
       data.forEach(person => {
-        const personId = nodeId++;
+        const tools = (person['Tools / Libraries / Frameworks'] || '').split(',')
+          .map(t => t.trim())
+          .filter(t => t && t !== 'null' && t !== 'undefined');
+        tools.forEach(tool => allTools.add(tool));
+      });
+
+      // Tool categories
+      const toolCategories = {
+        'Web Development': ['react', 'angular', 'vue', 'node', 'django', 'flask', 'html', 'css', 'javascript', 'typescript', 'php'],
+        'Data Processing': ['pandas', 'numpy', 'scipy', 'spark', 'hadoop', 'dask', 'sql', 'postgresql', 'mongodb'],
+        'Cloud & DevOps': ['aws', 'azure', 'gcp', 'docker', 'kubernetes', 'jenkins', 'git', 'ci/cd'],
+        'ML Frameworks': ['tensorflow', 'pytorch', 'keras', 'scikit', 'xgboost', 'lightgbm'],
+        'Visualization': ['tableau', 'powerbi', 'matplotlib', 'seaborn', 'plotly', 'd3'],
+        'Development Tools': ['vscode', 'jupyter', 'pycharm', 'github', 'gitlab']
+      };
+
+      // Helper function to categorize a tool
+      function categorizeTool(tool) {
+        const lowerTool = tool.toLowerCase();
+        for (const [category, keywords] of Object.entries(toolCategories)) {
+          if (keywords.some(keyword => lowerTool.includes(keyword))) {
+            return category;
+          }
+        }
+        return 'Other Tools';
+      }
+
+      // Group tools by category
+      const categorizedTools = {};
+      allTools.forEach(tool => {
+        const category = categorizeTool(tool);
+        if (!categorizedTools[category]) {
+          categorizedTools[category] = new Set();
+        }
+        categorizedTools[category].add(tool);
+      });
+
+      // Create category nodes and collect tools
+      Object.entries(categorizedTools).forEach(([category, toolSet]) => {
+        const categoryId = nodeId++;
+        const tools = Array.from(toolSet);
+        
         nodes.push({
-          id: personId,
-          label: person['Full Name'],
-          group: 'person'
+          id: categoryId,
+          label: wrapText(`${category}\n(${tools.length})`),
+          group: 'category',
+          level: 1,
+          size: 500,
+          font: { size: 200 }
         });
 
-        // Add tools nodes and edges
-        const tools = (person['Tools / Libraries / Frameworks'] || '').split(',').map(t => t.trim()).filter(t => t);
+        edges.push({
+          from: categoryId,
+          to: techId,
+          width: 3,
+          smooth: { type: 'horizontal' }
+        });
+
+        toolMembers.set(categoryId, []);
+
         tools.forEach(tool => {
-          let toolId = nodeMap.get(tool);
-          if (!toolId) {
-            toolId = nodeId++;
-            nodeMap.set(tool, toolId);
-            nodes.push({ 
-              id: toolId, 
-              label: tool, 
-              group: 'tool'
+          const toolId = nodeId++;
+          const peopleWithTool = data.filter(person => {
+            const personTools = (person['Tools / Libraries / Frameworks'] || '').split(',')
+              .map(t => t.trim())
+              .filter(t => t && t !== 'null' && t !== 'undefined');
+            return personTools.includes(tool);
+          });
+
+          if (peopleWithTool.length > 0) {
+            nodes.push({
+              id: toolId,
+              label: wrapText(`${tool}\n(${peopleWithTool.length})`),
+              group: 'skill',
+              level: 2,
+              size: 100,
+              font: { size: 100 },
+              clickable: true,
+              title: `Click to see ${peopleWithTool.length} people using this tool`
+            });
+
+            edges.push({
+              from: toolId,
+              to: categoryId,
+              width: 2,
+              smooth: { type: 'horizontal' }
+            });
+
+            toolMembers.get(categoryId).push({
+              id: toolId,
+              name: tool,
+              people: peopleWithTool
+            });
+
+            peopleWithTool.forEach(person => {
+              const personId = nodeId++;
+              nodes.push({
+                id: personId,
+                label: wrapText(person['Full Name']),
+                group: 'person',
+                level: 3,
+                size: 60,
+                font: { size: 60 },
+                hidden: true,
+                title: `${person['Full Name']}\n${person['Designation'] || ''}`
+              });
+
+              edges.push({
+                from: personId,
+                to: toolId,
+                width: 1,
+                hidden: true,
+                smooth: { type: 'horizontal' }
+              });
             });
           }
-          edges.push({ from: personId, to: toolId });
         });
       });
 
@@ -438,41 +1487,146 @@
       };
 
       const options = {
-        ...commonNetworkOptions,
+        ...toolsNetworkOptions,
+        nodes: {
+          shape: 'dot',
+          font: {
+            color: '#ffffff',
+            face: 'Inter, system-ui, sans-serif',
+            background: 'rgba(0,0,0,0.7)'
+          },
+          borderWidth: 2,
+          shadow: true
+        },
         groups: {
-          person: nodeStyles.person,
-          tool: nodeStyles.tool
+          technology: {
+            color: {
+              background: '#ff7675',
+              border: '#ff5f5f',
+              highlight: { background: '#ff8f8f', border: '#ff7675' }
+            },
+            shape: 'hexagon'
+          },
+          category: {
+            color: {
+              background: '#74b9ff',
+              border: '#5fa8f5',
+              highlight: { background: '#8fc5ff', border: '#74b9ff' }
+            },
+            shape: 'dot'
+          },
+          skill: {
+            color: {
+              background: '#a8e6cf',
+              border: '#88d4b0',
+              highlight: { background: '#baecd8', border: '#a8e6cf' }
+            },
+            shape: 'dot'
+          },
+          person: {
+            color: {
+              background: '#ffd3b6',
+              border: '#ffb088',
+              highlight: { background: '#ffdfc9', border: '#ffd3b6' }
+            },
+            shape: 'dot'
+          }
         }
       };
 
       const network = new vis.Network(container, networkData, options);
-      setupClickHandler(network, networkData);
+
+      // Track shown person nodes
+      const shownPersonNodes = new Set();
+
+      // Handle node clicks
+      network.on('click', function(params) {
+        if (params.nodes.length === 0) return;
+        
+        const clickedId = params.nodes[0];
+        const clickedNode = networkData.nodes.get(clickedId);
+        
+        if (clickedNode && clickedNode.clickable) {
+          const edges = networkData.edges.get().filter(edge => edge.to === clickedId);
+          const personNodes = edges.map(edge => edge.from);
+          
+          const isShowing = shownPersonNodes.has(clickedId);
+          
+          personNodes.forEach((personId, index) => {
+            const personNode = networkData.nodes.get(personId);
+            networkData.nodes.update({
+              id: personId,
+              hidden: isShowing,
+              x: isShowing ? undefined : clickedNode.x + 200,
+              y: isShowing ? undefined : clickedNode.y + (index - (personNodes.length - 1) / 2) * 50
+            });
+            networkData.edges.update({
+              from: personId,
+              to: clickedId,
+              hidden: isShowing
+            });
+          });
+
+          if (isShowing) {
+            shownPersonNodes.delete(clickedId);
+          } else {
+            shownPersonNodes.add(clickedId);
+          }
+        }
+      });
+
+      // Initial fit
+      network.once('afterDrawing', function() {
+        network.fit({
+          animation: {
+            duration: 1000,
+            easingFunction: 'easeInOutQuad'
+          }
+        });
+      });
     }
 
     function setupClickHandler(network, networkData) {
-      network.on('click', function(params) {
-        // Reset all edges to default color
-        networkData.edges.forEach(edge => {
-          edge.color = {
-            color: '#FFD6A5',
-            opacity: 0.7
-          };
-          networkData.edges.update(edge);
-        });
+      let selectedNode = null;
 
-        if (params.nodes.length > 0) {
-          const nodeId = params.nodes[0];
-          const connectedEdges = network.getConnectedEdges(nodeId);
+      network.on('click', function(params) {
+        const clickedNodeId = params.nodes[0];
+        
+        if (clickedNodeId) {
+          const allNodes = networkData.nodes.get();
           
-          // Highlight connected edges
-          connectedEdges.forEach(edgeId => {
-            const edge = networkData.edges.get(edgeId);
-            edge.color = {
-              color: '#FF6600',
-              opacity: 1
-            };
-            networkData.edges.update(edge);
-          });
+          // Reset previous selection
+          if (selectedNode !== null) {
+            const prevNode = networkData.nodes.get(selectedNode);
+            prevNode.color = prevNode.originalColor;
+            networkData.nodes.update(prevNode);
+          }
+          
+          // Highlight new selection
+          const node = networkData.nodes.get(clickedNodeId);
+          if (!node.originalColor) {
+            node.originalColor = node.color;
+          }
+          node.color = {
+            background: '#ff9800',
+            border: '#ff9800',
+          };
+          node.font = {
+            color: '#000000',
+            bold: false
+          };
+          networkData.nodes.update(node);
+          selectedNode = clickedNodeId;
+        } else {
+          // Click on empty space - reset selection
+          if (selectedNode !== null) {
+            const node = networkData.nodes.get(selectedNode);
+            node.color = node.originalColor;
+            node.font.bold = false;
+            node.font.color = undefined;
+            networkData.nodes.update(node);
+            selectedNode = null;
+          }
         }
       });
     }

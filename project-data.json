@@ -1,0 +1,233 @@
+{
+  "projects": [
+    {
+      "name": "Alt-text",
+      "summary": "A web-based project has been developed to enhance accessibility for visually impaired users by generating alt text and long descriptions for images. Users can upload individual images or zip files containing multiple images, select a language model (LLM), specify the desired word count or character limit, and choose whether a long description is required. Upon initiating the process, the platform generates alt text and descriptions adhering to accessibility standards. The solution is specifically tailored to meet the guidelines of publishers such as Springer, Wiley, McGraw Hill, Taylor & Francis, ensuring compliance with their accessibility requirements. This project aims to facilitate inclusive content consumption and improve user experience for visually impaired individuals.",
+      "link": "https://code.gramener.com/daais-data-operations/accessibility/consolidated-ui-for-alt-text/-/tree/main?ref_type=heads",
+      "technologies": ["Python", "Pandas", "NumPy", "Matplotlib", "Jupyter"]
+    },
+    {
+      "name": "CAR Gen AI",
+      "summary": "Machine learning project focused on predictive modeling and classification. Achieved 92% accuracy on test data using ensemble methods.",
+      "link": "https://github.com/example/ml-project",
+      "technologies": ["Python", "TensorFlow", "Scikit-learn", "Keras", "PyTorch"]
+    },
+    {
+      "name": "DataChat",
+      "summary": "Cross-platform mobile application with offline capabilities and push notifications. Features include geolocation, camera integration, and social sharing.",
+      "link": "https://github.com/example/mobile-app",
+      "technologies": ["React Native", "Firebase", "Redux", "Expo"]
+    },
+    {
+      "name": "DataGraphix",
+      "summary": "DataGraphix is an AI-driven platform that effortlessly transforms raw data into visually interactive dashboards and insightful graphs for smarter decision-making.",
+      "link": "https://code.gramener.com/Elaturi.Bhanu/datagraphix_v3.git",
+      "technologies": ["Sentiment Analysis","Reddit Data Scrapping","Data Analysis","dash board creation","javascript","python"]
+    },
+    {
+      "name": "Embase Indexing",
+      "summary": "Interactive data visualization dashboard that presents complex information in an intuitive format. Includes filtering, sorting, and export capabilities.",
+      "link": "https://github.com/example/data-viz",
+      "technologies": ["D3.js", "React", "SVG", "CSS3", "HTML5"]
+    },
+    {
+      "name": "Figma_to_css",
+      "summary": "Scalable cloud-based solution with microservices architecture. Implemented CI/CD pipeline and infrastructure as code for automated deployment.",
+      "link": "https://github.com/example/cloud-project",
+      "technologies": ["AWS", "Docker", "Kubernetes", "Terraform", "Jenkins"]
+    },
+    {
+      "name": "MH AVVO",
+      "summary": "This project automated lawyer data collection, which was previously a slow, manual, and error-prone process taking 15 minutes per profile. By using Gemini models for automated searching and LLMs for data filtering and validation, the solution drastically reduced search time to near instantaneous, significantly lowered costs, and improved data quality. This transformed weeks of manual work into an efficient, automated system costing only double-digit dollars, delivering comprehensive and reliable lawyer profiles.",
+      "link": "https://code.gramener.com/Harshavardhan.Karimikonda/mh_avvo_project#",
+      "technologies": ["SQL", "PostgreSQL", "MongoDB", "Redis", "ORM"]
+    },
+    {
+      "name": "Database Design",
+      "summary": "Comprehensive database design project with optimized schema and query performance. Implemented data migration, backup, and recovery procedures.",
+      "link": "https://github.com/example/db-design",
+      "technologies": ["SQL", "PostgreSQL", "MongoDB", "Redis", "ORM"]
+    },
+    {
+      "name": "Movie Recommendation System",
+      "summary": "Comprehensive database design project with optimized schema and query performance. Implemented data migration, backup, and recovery procedures.",
+      "link": "https://github.com/example/db-design",
+      "technologies": ["SQL", "PostgreSQL", "MongoDB", "Redis", "ORM"]
+    },
+    {
+      "name": "Natgen",
+      "summary": {
+        "overview": "Traditional RAG systems lose context, reducing accuracy. Contextual Retrieval enhances embeddings and BM25 indexing with chunk-specific context, ensuring more relevant AI responses while remaining scalable and cost-effective.",
+        "components": [
+          {
+            "name": "Document Upload",
+            "description": "A document is uploaded to start the process",
+            "link":""
+          },
+          {
+            "name": "OCR Extraction",
+            "description": "Azure OCR extracts text from the uploaded document"
+          },
+          {
+            "name": "Chunking",
+            "description": "The extracted text is split into smaller, manageable chunks"
+          },
+          {
+            "name": "Context Generation",
+            "description": "Each chunk is processed with its full document to maintain context. Prompt caching prevents redundant AI calls"
+          },
+          {
+            "name": "Embedding",
+            "description": "Chunks are converted into numerical vectors"
+          },
+          {
+            "name": "Storage",
+            "description": "The embeddings are securely stored in a PostgreSQL database with the pgvector extension for efficient vector search"
+          },
+          {
+            "name": "Retrieval",
+            "description": "Relevant chunks are found using vector similarity"
+          },
+          {
+            "name": "Answer Generation",
+            "description": "LLMs generate a response using retrieved chunks"
+          }
+        ]
+      },
+      "link": "https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git",
+      "technologies":  ["Python", "OpenAI", "PostgreSQL", "AWS", "Azure OCR", "Embedding"]
+    },
+    {
+      "name": "Xperi Platform",
+      "summary": {
+        "overview": "A comprehensive platform for managing and analyzing media content",
+        "components": [
+          {
+            "name": "Consolidated User Interface",
+            "description": "A Node.js frontend application that consolidates various Xperi solutions with features including:\n\n• Unified Dashboard: Single interface for all Xperi services\n• Real-time Updates: Live status monitoring of all engines\n• Batch Processing: Handle multiple files and requests simultaneously\n• User Management: Role-based access control\n• Analytics: Performance metrics and usage statistics\n• Customizable Views: Personalized layouts for different user roles",
+            "link": "https://code.gramener.com/xperi/consolidated-user-interface/consolidated-user-interface"
+          },
+          {
+            "name": "Quality Assurance",
+            "description": "Automated quality control system for media content with capabilities including:\n\n• Metadata Validation: Automated metadata checks\n• Content Analysis: Image and video quality assessment\n• Compliance Checks: Adherence to industry standards\n• Error Reporting: Detailed issue identification\n• Performance Metrics: Quality score generation\n• Custom Rules: User-defined quality criteria",
+            "link": "https://code.gramener.com/xperi/quality-assurance"
+          },
+          {
+            "name": "Mail Management Engine",
+            "description": "An automated system for processing and managing email communications with features including:\n\n• Email Monitoring: Real-time inbox monitoring\n• Attachment Processing: Automated extraction and classification\n• Smart Routing: Rule-based email distribution\n• Template Management: Standardized response templates\n• Status Tracking: Email processing pipeline visualization\n• Audit Logs: Comprehensive tracking of all email interactions",
+            "link": "https://code.gramener.com/xperi/mail-management/mail_management_engine"
+          },
+          {
+            "name": "Music Metadata Extraction Engine",
+            "description": "Advanced system for extracting and processing music metadata with capabilities including:\n\n• Audio Analysis: Deep learning-based audio feature extraction\n• Metadata Enhancement: Enrichment from multiple sources\n• Genre Classification: Automated music categorization\n• Artist Recognition: Advanced artist name disambiguation\n• Batch Processing: High-throughput parallel processing\n• Quality Validation: Automated metadata verification",
+            "link": "https://code.gramener.com/xperi/music-metadata/music_metadata_extraction_engine"
+          },
+          {
+            "name": "Preprocessing Engine",
+            "description": "LLM-powered engine for standardizing TV schedules with features including:\n\n• Format Detection: Automatic identification of input formats\n• Data Extraction: Intelligent parsing of various file types\n• Format Standardization: Conversion to unified Excel format\n• Validation Rules: Custom business logic implementation\n• Error Handling: Detailed error reporting and recovery\n• Batch Processing: Support for multiple file processing",
+            "link": "https://code.gramener.com/xperi/preprocessing/preprocessing_engine_transformers"
+          },
+          {
+            "name": "Consolidated Microservices",
+            "description": "A suite of interconnected microservices providing:\n\n• Service Registry: Centralized service management\n• Load Balancing: Automated request distribution\n• Circuit Breaking: Fault tolerance mechanisms\n• API Gateway: Unified access point for all services\n• Monitoring: Real-time service health tracking\n• Scaling: Automatic horizontal scaling capabilities",
+            "link": "https://code.gramener.com/xperi/consolidated-microservices"
+          },
+          {
+            "name": "Web Extraction Microservice",
+            "description": "Specialized service for web data extraction featuring:\n\n• Automated Scraping: Scheduled data collection\n• Pattern Recognition: Smart content identification\n• Data Transformation: Structured output generation\n• Rate Limiting: Respectful web scraping\n• Proxy Management: IP rotation for reliability\n• Export Options: Multiple output format support",
+            "link": "https://code.gramener.com/xperi/website-data-extraction/web-extraction-microservice"
+          }
+        ]
+      },
+      "link": "https://github.com/example/xperi-platform",
+      "technologies": ["Python", "PostgreSQL", "AWS", "Azure OCR", "Node.js", "ExpressJS","LLM API","Fast API","JIRA"]
+    },
+    {
+      "name": "Translation using LLM",
+      "summary": "Language translation system powered by Large Language Models for accurate and context-aware translations.",
+      "link": "https://github.com/example/llm-translation",
+      "technologies": ["Python", "PyTorch", "Transformers", "FastAPI"]
+    },
+    {
+      "name": "Traffic Analysis PoC",
+      "summary": "This project aims to predict traffic speeds and congestion levels on Penang Island’s main road network using historical hourly speed data. The dataset is designed to reflect real-world traffic patterns, factoring in road types, speed limits, time of day, and other influences. The system can forecast road speeds for specific times, simulate the impact of incidents such as construction or accidents, and analyze congestion when a certain number of vehicles enter a junction. A dynamic map visualization displays congestion levels with color-coded indicators and multiple viewing options, including street view, dark mode, and satellite view.",
+      "link": "https://code.gramener.com/Hithesh.MR/malaysia-dataset-poc",
+      "technologies": ["Mapbox", "Overpass Turbo", "Leaflet", "ESRI", "ArcGIS", "OSM", "Here Maps", "LightGBM", "XGBoost", "geojson", "flask"]
+    },
+    {
+      "name": "Timesheet Generator JIRA",
+      "summary": "This project automates timesheet generation by processing CSV or PDF files to extract project and employee allocation details. An LLM analyzes the data to estimate the time required for each employee based on project workload and allocation percentages. The structured information is then converted into JSON format and used to create Jira entries via API calls, streamlining project tracking and resource management.",
+      "link": "https://code.gramener.com/Hithesh.MR/timesheet-generator-jira/-/tree/develop?ref_type=heads",
+      "technologies":["OpenAI", "Flask", "Pandas", "Jira API"]
+    },
+    {
+      "name": "Ragenhancement",
+      "summary": "Comprehensive database design project with optimized schema and query performance. Implemented data migration, backup, and recovery procedures.",
+      "link": "https://github.com/example/db-design",
+      "technologies": ["SQL", "PostgreSQL", "MongoDB", "Redis", "ORM"]
+    },
+    {
+      "name": "RAG Framework",
+      "summary": {
+        "overview": "A specialized RAG (Retrieval-Augmented Generation) framework for extracting and querying data from table-intensive financial PDF documents. The system enables natural language-based retrieval of specific data points using LLMs.",
+        "components": [
+          {
+            "name": "PDF Extraction",
+            "description": "Extracts text and tables from financial PDFs with high accuracy",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+          },
+          {
+            "name": "Contextualization",
+            "description": "Uses LLM to create summaries, Markdown tables, and Q&A pairs from the extracted data",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "Embedding Generation",
+            "description": "Generates embeddings for summaries, tables, and Q&A pairs using OpenAI's text-embedding-3-large model",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "Vector Storage",
+            "description": "Stores embeddings in PostgreSQL with pgvector extension, handling dimensionality limitations through splitting",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "Retrieval System",
+            "description": "Combines vector similarity search and BM25 search for accurate data retrieval based on user queries",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "LLM Integration",
+            "description": "Provides retrieved data as context to LLM for generating accurate answers to user questions",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "Infrastructure",
+            "description": "Uses RabbitMQ for task management (Celery) and queue monitoring (Flower)",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          },
+          {
+            "name": "Deployment Options",
+            "description": "Supports deployment on AWS, Azure, on-premises servers, or locally with YAML-based configuration",
+            "link":"https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git"
+
+          }
+        ]
+      },
+      "link": "https://code.gramener.com/premlal-premkumar/rag-framework/rag_framework_finance_data_extraction.git",
+      "technologies": ["Python", "OpenAI", "PostgreSQL", "AWS", "Azure OCR", "Embedding"]
+    },
+    {
+      "name": "Obituary Data",
+      "summary": "This project addressed discrepancies found between scraped obituary data and a client's reference dataset. The issues were missing obituaries and inconsistent URL formats. To solve this, embedding-based text similarity was used to analyze URLs and differentiate between format variations and truly missing data. This approach quantified the exact match rate, identified patterns in URL discrepancies, and provided actionable insights and recommendations to improve the web scraping process and ensure ongoing data quality. The project delivered a comprehensive analysis report to the client.",
+      "link": "https://colab.research.google.com/drive/10tKUwnZ3BVm5E-MFjY1eeJhRtPjNW9tQ?usp=sharing",
+      "technologies": ["SQL", "PostgreSQL", "MongoDB", "Redis", "ORM"]
+    }
+  ]
+}
